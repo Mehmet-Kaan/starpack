@@ -1,0 +1,33 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Star Pack Mark">
+  <defs>
+    <linearGradient id="sp-blue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2563EB" />
+      <stop offset="1" stop-color="#1E40AF" />
+    </linearGradient>
+    <linearGradient id="sp-wood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E6C690" />
+      <stop offset="1" stop-color="#C99C59" />
+    </linearGradient>
+    <linearGradient id="sp-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F59E0B" />
+      <stop offset="1" stop-color="#FBBF24" />
+    </linearGradient>
+  </defs>
+
+  <!-- Box -->
+  <g transform="translate(10,22)">
+    <path d="M22 10 L38 18 L22 26 L6 18 Z" fill="url(#sp-wood)"/>
+    <path d="M22 10 L38 18 L38 30 L22 38 Z" fill="#8B5E34"/>
+    <path d="M22 10 L6 18 L6 30 L22 38 Z" fill="#B5884A"/>
+    <path d="M22 10 L30 4 L46 12 L38 18 Z" fill="#D6B37F"/>
+    <path d="M22 10 L14 4 L-2 12 L6 18 Z" fill="#E6C690"/>
+  </g>
+
+  <!-- Stars -->
+  <g transform="translate(6,0)">
+    <circle cx="34" cy="10" r="2" fill="url(#sp-gold)"/>
+    <circle cx="42" cy="6" r="1.6" fill="url(#sp-gold)"/>
+    <path d="M50 4 l1.8 3.6 3.9.6 -2.9 2.8 .7 3.9 -3.6-1.9 -3.6 1.9 .7-3.9 -2.9-2.8 3.9-.6z" fill="url(#sp-gold)"/>
+  </g>
+</svg>
+
