@@ -65,7 +65,7 @@ const Navbar = () => {
         <Link to="/">
           <Flex align="center" gap={2}>
             <Image
-              src="/images/star-pack-logo.svg"
+              src="./images/star-pack-logo.svg"
               alt="Star Pack"
               height="28px"
             />

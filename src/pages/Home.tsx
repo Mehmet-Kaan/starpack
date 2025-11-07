@@ -184,17 +184,17 @@ const Home = () => {
           {[
             {
               title: "Kartonger",
-              image: "/images/boxes.jpg",
+              image: "/starpack/images/boxes.jpg",
               text: "Stabila kartonger i olika storlekar för alla behov.",
             },
             {
               title: "Tejp & Fyllnad",
-              image: "/images/tape.jpg",
+              image: "/starpack/images/tape.jpg",
               text: "Säkra paket med tejp, bubbelplast och fyllnadsmaterial.",
             },
             {
               title: "Plast & Påsar",
-              image: "/images/plastic.jpg",
+              image: "/starpack/images/plastic.jpg",
               text: "Praktiska påsar och stretchfilm för enkel packning.",
             },
           ].map((item, i) => (
@@ -216,7 +216,7 @@ const Home = () => {
                 onError={(e) => {
                   const target = e.currentTarget as HTMLImageElement;
                   if (target.src.indexOf("placeholder.png") === -1) {
-                    target.src = "/images/placeholder.png";
+                    target.src = "./images/placeholder.png";
                   }
                 }}
               />
@@ -246,22 +246,22 @@ const Home = () => {
               {
                 title: "Flyttlåda L",
                 price: "89 kr",
-                image: "/images/boxes.jpg",
+                image: "/starpack/images/boxes.jpg",
               },
               {
                 title: "Packtejp 48mm",
                 price: "29 kr",
-                image: "/images/tape.jpg",
+                image: "/starpack/images/tape.jpg",
               },
               {
                 title: "Bubbelplast rulle",
                 price: "149 kr",
-                image: "/images/plastic.jpg",
+                image: "/starpack/images/plastic.jpg",
               },
               {
                 title: "E-handelspåse",
                 price: "99 kr",
-                image: "/images/plastic.jpg",
+                image: "/starpack/images/plastic.jpg",
               },
             ].map((p, i) => (
               <Box
@@ -281,7 +281,7 @@ const Home = () => {
                   onError={(e) => {
                     const target = e.currentTarget as HTMLImageElement;
                     if (target.src.indexOf("placeholder.png") === -1) {
-                      target.src = "/images/placeholder.png";
+                      target.src = "/starpack/images/placeholder.png";
                     }
                   }}
                 />
@@ -306,22 +306,22 @@ const Home = () => {
             {
               title: "Flyttlåda L",
               price: "89 kr",
-              image: "/images/boxes.jpg",
+              image: "/starpack/images/boxes.jpg",
             },
             {
               title: "Packtejp 48mm",
               price: "29 kr",
-              image: "/images/tape.jpg",
+              image: "/starpack/images/tape.jpg",
             },
             {
               title: "Bubbelplast rulle",
               price: "149 kr",
-              image: "/images/plastic.jpg",
+              image: "/starpack/images/plastic.jpg",
             },
             {
               title: "E-handelspåse",
               price: "99 kr",
-              image: "/images/plastic.jpg",
+              image: "/starpack/images/plastic.jpg",
             },
           ].map((p, i) => (
             <Box
@@ -342,7 +342,7 @@ const Home = () => {
                 onError={(e) => {
                   const target = e.currentTarget as HTMLImageElement;
                   if (target.src.indexOf("placeholder.png") === -1) {
-                    target.src = "/images/placeholder.png";
+                    target.src = "/starpack/images/placeholder.png";
                   }
                 }}
               />
