@@ -40,7 +40,7 @@ const Product = ({ product }: ProductProps) => {
         <Link to={`/product/${product.id}`}>
           {/* <Link to={`/product/${product.id}`}> */}
           <Image
-            src={product.image || "/images/placeholder.png"}
+            src={product.image || "./images/placeholder.png"}
             alt={product.name}
             borderRadius="md"
             objectFit="cover"

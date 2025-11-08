@@ -20,7 +20,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom"; // <-- change here
+import { HashRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { CartProvider } from "./components/Contexts/CartContext";
 import theme from "./theme/theme";

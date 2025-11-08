@@ -30,7 +30,7 @@ const Home = () => {
     <Box minH="100vh">
       <Box
         position="relative"
-        bgImage="url('/images/packaging-hero.jpg')"
+        bgImage="url('./images/packaging-hero.jpg')"
         bgSize="cover"
         bgPos="center"
         bgRepeat="no-repeat"
