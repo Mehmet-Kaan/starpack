@@ -16,6 +16,7 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../components/firebase";
 import type { ProductType } from "../hooks/types";
 import Product from "../components/Products/product";
+import ScrollReveal from "../hooks/ScrollReveal";
 
 const Products = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -259,32 +260,33 @@ const Products = () => {
   return (
     <Box py={{ base: 10, md: 16 }} px={{ base: 6, md: 12 }}>
       <Container maxW="7xl">
-        <Flex
-          mb={6}
-          align="center"
-          justify="space-between"
-          flexWrap={{ base: "wrap", md: "nowrap" }}
-          gap={4}
-        >
-          <Heading>Our Products</Heading>
-
-          <Stack
-            direction={{ base: "column", md: "row" }}
-            gap={4}
+        <ScrollReveal>
+          <Flex
+            mb={6}
             align="center"
+            justify="space-between"
+            flexWrap={{ base: "wrap", md: "nowrap" }}
+            gap={4}
           >
-            <Input
-              placeholder="Search products..."
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              width={{ base: "100%", md: "200px" }}
-            />
-            <Button onClick={() => setSortAsc(!sortAsc)}>
-              Sort by Price {sortAsc ? "(Asc)" : "(Desc)"}
-            </Button>
-          </Stack>
-        </Flex>
+            <Heading>Our Products</Heading>
 
+            <Stack
+              direction={{ base: "column", md: "row" }}
+              gap={4}
+              align="center"
+            >
+              <Input
+                placeholder="Search products..."
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                width={{ base: "100%", md: "200px" }}
+              />
+              <Button onClick={() => setSortAsc(!sortAsc)}>
+                Sort by Price {sortAsc ? "(Asc)" : "(Desc)"}
+              </Button>
+            </Stack>
+          </Flex>
+        </ScrollReveal>
         {/* <Box mb={6} p={4} bg="gray.50" borderRadius="md" boxShadow="sm">
         <Heading size="sm">Cart ({cart.length} items)</Heading>
         {cart.length > 0 ? (
@@ -318,7 +320,11 @@ const Products = () => {
               sortedProducts.map((p, index) => {
                 const cartItem = cart.find((item) => item.id === p.id);
 
-                return <Product key={index} product={p} cartItem={cartItem} />;
+                return (
+                  <ScrollReveal key={index}>
+                    <Product product={p} cartItem={cartItem} />
+                  </ScrollReveal>
+                );
               })
             ) : (
               <Text>No products found!</Text>

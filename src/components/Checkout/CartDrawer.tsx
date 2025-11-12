@@ -81,7 +81,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   <HStack key={i} justify="space-between" align="center">
                     <HStack gap={3}>
                       <Image
-                        src={item.image || "/images/placeholder.png"}
+                        src={item.image || "./images/placeholder.png"}
                         alt={item.name}
                         boxSize="58px"
                         borderRadius="md"

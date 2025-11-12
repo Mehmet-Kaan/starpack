@@ -24,6 +24,7 @@ import {
 } from "react-icons/fa6";
 
 import "../styles/home.css";
+import ScrollReveal from "../hooks/ScrollReveal";
 
 const Home = () => {
   return (
@@ -98,6 +99,7 @@ const Home = () => {
                   >
                     Grossist inom emballage
                   </Badge>
+
                   <Heading size="2xl" color="primary.800" lineHeight="1.1">
                     Smartare förpackningar för effektiva leveranser
                   </Heading>
@@ -107,7 +109,7 @@ const Home = () => {
                     Sverige.
                   </Text>
                   <HStack gap={4} wrap="wrap">
-                    <Link to="/webshop">
+                    <Link to="/products">
                       <Button size="lg">Utforska Produkter</Button>
                     </Link>
                     <Link to="/contact">
@@ -151,7 +153,6 @@ const Home = () => {
           </Box>
         </Container>
       </Box>
-
       {/* Stats Strip */}
       <Box bg="white" borderTopWidth="1px" borderBottomWidth="1px">
         <Container maxW="7xl" px={{ base: 6, md: 12 }} py={8}>
@@ -176,72 +177,135 @@ const Home = () => {
       </Box>
 
       {/* Product Categories */}
-      <Container maxW="7xl" py={20} px={{ base: 6, md: 12 }}>
-        <Heading textAlign="center" mb={12}>
-          Våra Produktkategorier
-        </Heading>
-        <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
-          {[
-            {
-              title: "Kartonger",
-              image: "/starpack/images/boxes.jpg",
-              text: "Stabila kartonger i olika storlekar för alla behov.",
-            },
-            {
-              title: "Tejp & Fyllnad",
-              image: "/starpack/images/tape.jpg",
-              text: "Säkra paket med tejp, bubbelplast och fyllnadsmaterial.",
-            },
-            {
-              title: "Plast & Påsar",
-              image: "/starpack/images/plastic.jpg",
-              text: "Praktiska påsar och stretchfilm för enkel packning.",
-            },
-          ].map((item, i) => (
-            <Box
-              key={i}
-              bg="white"
-              borderRadius="xl"
-              boxShadow="sm"
-              overflow="hidden"
-              transition="0.3s"
-              _hover={{ boxShadow: "xl", transform: "translateY(-4px)" }}
-            >
-              <Image
-                src={item.image}
-                alt={item.title}
-                h="220px"
-                w="100%"
-                objectFit="cover"
-                onError={(e) => {
-                  const target = e.currentTarget as HTMLImageElement;
-                  if (target.src.indexOf("placeholder.png") === -1) {
-                    target.src = "./images/placeholder.png";
-                  }
-                }}
-              />
-              <Box p={6}>
-                <Heading size="md" mb={2}>
-                  {item.title}
-                </Heading>
-                <Text color="gray.600">{item.text}</Text>
+      <ScrollReveal>
+        <Container maxW="7xl" py={20} px={{ base: 6, md: 12 }}>
+          <Heading textAlign="center" mb={12}>
+            Våra Produktkategorier
+          </Heading>
+          <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
+            {[
+              {
+                title: "Kartonger",
+                image: "/starpack/images/boxes.jpg",
+                text: "Stabila kartonger i olika storlekar för alla behov.",
+              },
+              {
+                title: "Tejp & Fyllnad",
+                image: "/starpack/images/tape.jpg",
+                text: "Säkra paket med tejp, bubbelplast och fyllnadsmaterial.",
+              },
+              {
+                title: "Plast & Påsar",
+                image: "/starpack/images/plastic.jpg",
+                text: "Praktiska påsar och stretchfilm för enkel packning.",
+              },
+            ].map((item, i) => (
+              <Box
+                key={i}
+                bg="white"
+                borderRadius="xl"
+                boxShadow="sm"
+                overflow="hidden"
+                transition="0.3s"
+                _hover={{ boxShadow: "xl", transform: "translateY(-4px)" }}
+              >
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  h="220px"
+                  w="100%"
+                  objectFit="cover"
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement;
+                    if (target.src.indexOf("placeholder.png") === -1) {
+                      target.src = "./images/placeholder.png";
+                    }
+                  }}
+                />
+                <Box p={6}>
+                  <Heading size="md" mb={2}>
+                    {item.title}
+                  </Heading>
+                  <Text color="gray.600">{item.text}</Text>
+                </Box>
               </Box>
-            </Box>
-          ))}
-        </SimpleGrid>
-      </Container>
+            ))}
+          </SimpleGrid>
+        </Container>
+      </ScrollReveal>
 
       {/* Featured Products */}
-      <Container maxW="7xl" py={6} px={{ base: 6, md: 12 }}>
-        <Flex justify="space-between" align="center" mb={4}>
-          <Heading size="lg">Utvalda produkter</Heading>
-          <Link to="/webshop">
-            <Button variant="ghost">Se alla</Button>
-          </Link>
-        </Flex>
-        {/* Mobile: horizontal scroll, Desktop: grid */}
-        <Box display={{ base: "block", md: "none" }}>
-          <HStack gap={4} overflowX="auto" py={2} px={1}>
+      <ScrollReveal>
+        <Container maxW="7xl" py={6} px={{ base: 6, md: 12 }}>
+          <Flex justify="space-between" align="center" mb={4}>
+            <Heading size="lg">Utvalda produkter</Heading>
+            <Link to="/products">
+              <Button variant="ghost">Se alla</Button>
+            </Link>
+          </Flex>
+          {/* Mobile: horizontal scroll, Desktop: grid */}
+          <Box display={{ base: "block", md: "none" }}>
+            <HStack gap={4} overflowX="auto" py={2} px={1}>
+              {[
+                {
+                  title: "Flyttlåda L",
+                  price: "89 kr",
+                  image: "/starpack/images/boxes.jpg",
+                },
+                {
+                  title: "Packtejp 48mm",
+                  price: "29 kr",
+                  image: "/starpack/images/tape.jpg",
+                },
+                {
+                  title: "Bubbelplast rulle",
+                  price: "149 kr",
+                  image: "/starpack/images/plastic.jpg",
+                },
+                {
+                  title: "E-handelspåse",
+                  price: "99 kr",
+                  image: "/starpack/images/plastic.jpg",
+                },
+              ].map((p, i) => (
+                <Box
+                  key={i}
+                  minW="260px"
+                  bg="white"
+                  borderRadius="xl"
+                  boxShadow="sm"
+                  overflow="hidden"
+                >
+                  <Image
+                    src={p.image}
+                    alt={p.title}
+                    h="160px"
+                    w="100%"
+                    objectFit="cover"
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLImageElement;
+                      if (target.src.indexOf("placeholder.png") === -1) {
+                        target.src = "/starpack/images/placeholder.png";
+                      }
+                    }}
+                  />
+                  <Box p={4}>
+                    <Heading size="sm" mb={1}>
+                      {p.title}
+                    </Heading>
+                    <Text color="primary.700" fontWeight="semibold">
+                      {p.price}
+                    </Text>
+                  </Box>
+                </Box>
+              ))}
+            </HStack>
+          </Box>
+          <SimpleGrid
+            columns={{ base: 1, md: 4 }}
+            gap={6}
+            display={{ base: "none", md: "grid" }}
+          >
             {[
               {
                 title: "Flyttlåda L",
@@ -266,11 +330,12 @@ const Home = () => {
             ].map((p, i) => (
               <Box
                 key={i}
-                minW="260px"
                 bg="white"
                 borderRadius="xl"
                 boxShadow="sm"
                 overflow="hidden"
+                transition="0.2s"
+                _hover={{ boxShadow: "md", transform: "translateY(-2px)" }}
               >
                 <Image
                   src={p.image}
@@ -295,173 +360,123 @@ const Home = () => {
                 </Box>
               </Box>
             ))}
-          </HStack>
-        </Box>
-        <SimpleGrid
-          columns={{ base: 1, md: 4 }}
-          gap={6}
-          display={{ base: "none", md: "grid" }}
-        >
-          {[
-            {
-              title: "Flyttlåda L",
-              price: "89 kr",
-              image: "/starpack/images/boxes.jpg",
-            },
-            {
-              title: "Packtejp 48mm",
-              price: "29 kr",
-              image: "/starpack/images/tape.jpg",
-            },
-            {
-              title: "Bubbelplast rulle",
-              price: "149 kr",
-              image: "/starpack/images/plastic.jpg",
-            },
-            {
-              title: "E-handelspåse",
-              price: "99 kr",
-              image: "/starpack/images/plastic.jpg",
-            },
-          ].map((p, i) => (
-            <Box
-              key={i}
-              bg="white"
-              borderRadius="xl"
-              boxShadow="sm"
-              overflow="hidden"
-              transition="0.2s"
-              _hover={{ boxShadow: "md", transform: "translateY(-2px)" }}
-            >
-              <Image
-                src={p.image}
-                alt={p.title}
-                h="160px"
-                w="100%"
-                objectFit="cover"
-                onError={(e) => {
-                  const target = e.currentTarget as HTMLImageElement;
-                  if (target.src.indexOf("placeholder.png") === -1) {
-                    target.src = "/starpack/images/placeholder.png";
-                  }
-                }}
-              />
-              <Box p={4}>
-                <Heading size="sm" mb={1}>
-                  {p.title}
-                </Heading>
-                <Text color="primary.700" fontWeight="semibold">
-                  {p.price}
-                </Text>
-              </Box>
-            </Box>
-          ))}
-        </SimpleGrid>
-      </Container>
-
-      {/* Trusted By Section */}
-      <Box bg="primary.50" py={16}>
-        <Container maxW="6xl" textAlign="center">
-          <Text
-            color="primary.700"
-            textTransform="uppercase"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            mb={6}
-          >
-            Pålitlig partner till företag i hela Sverige
-          </Text>
-          <Flex
-            justify="center"
-            align="center"
-            wrap="wrap"
-            gap={10}
-            opacity={0.9}
-          >
-            {["PostNord", "Schenker", "IKEA", "Bring", "Apotea"].map((name) => (
-              <Box
-                key={name}
-                px={6}
-                py={3}
-                borderRadius="md"
-                bg="white"
-                boxShadow="sm"
-              >
-                <Text fontWeight="bold" color="gray.700" fontSize="md">
-                  {name}
-                </Text>
-              </Box>
-            ))}
-          </Flex>
-        </Container>
-      </Box>
-
-      {/* Benefits Section */}
-      <Box bg="primary.800" color="white" py={20}>
-        <Container maxW="7xl" px={{ base: 6, md: 12 }}>
-          <Heading textAlign="center" mb={12}>
-            Varför välja oss?
-          </Heading>
-          <SimpleGrid columns={{ base: 1, md: 3 }} gap={10}>
-            {[
-              {
-                icon: FaTruckFast,
-                title: "Snabb Leverans",
-                text: "Snabb och pålitlig leverans över hela Sverige.",
-              },
-              {
-                icon: FaMoneyBillWave,
-                title: "Grossistpriser",
-                text: "Konkurrenskraftiga priser för företag.",
-              },
-              {
-                icon: FaLeaf,
-                title: "Hållbara Material",
-                text: "Återvinningsbara och miljövänliga förpackningar.",
-              },
-            ].map((item, i) => (
-              <VStack key={i} gap={4}>
-                <Box
-                  w="14"
-                  h="14"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  borderRadius="full"
-                  bg="whiteAlpha.200"
-                >
-                  <Icon as={item.icon} boxSize={6} />
-                </Box>
-                <Heading size="md">{item.title}</Heading>
-                <Text textAlign="center" color="primary.100">
-                  {item.text}
-                </Text>
-              </VStack>
-            ))}
           </SimpleGrid>
         </Container>
-      </Box>
+      </ScrollReveal>
+
+      {/* Trusted By Section */}
+      <ScrollReveal>
+        <Box bg="primary.50" py={16}>
+          <Container maxW="6xl" textAlign="center">
+            <Text
+              color="primary.700"
+              textTransform="uppercase"
+              fontWeight="semibold"
+              letterSpacing="wide"
+              mb={6}
+            >
+              Pålitlig partner till företag i hela Sverige
+            </Text>
+            <Flex
+              justify="center"
+              align="center"
+              wrap="wrap"
+              gap={10}
+              opacity={0.9}
+            >
+              {["PostNord", "Schenker", "IKEA", "Bring", "Apotea"].map(
+                (name) => (
+                  <Box
+                    key={name}
+                    px={6}
+                    py={3}
+                    borderRadius="md"
+                    bg="white"
+                    boxShadow="sm"
+                  >
+                    <Text fontWeight="bold" color="gray.700" fontSize="md">
+                      {name}
+                    </Text>
+                  </Box>
+                )
+              )}
+            </Flex>
+          </Container>
+        </Box>
+      </ScrollReveal>
+
+      {/* Benefits Section */}
+      <ScrollReveal>
+        <Box bg="primary.800" color="white" py={20}>
+          <Container maxW="7xl" px={{ base: 6, md: 12 }}>
+            <Heading textAlign="center" mb={12}>
+              Varför välja oss?
+            </Heading>
+            <SimpleGrid columns={{ base: 1, md: 3 }} gap={10}>
+              {[
+                {
+                  icon: FaTruckFast,
+                  title: "Snabb Leverans",
+                  text: "Snabb och pålitlig leverans över hela Sverige.",
+                },
+                {
+                  icon: FaMoneyBillWave,
+                  title: "Grossistpriser",
+                  text: "Konkurrenskraftiga priser för företag.",
+                },
+                {
+                  icon: FaLeaf,
+                  title: "Hållbara Material",
+                  text: "Återvinningsbara och miljövänliga förpackningar.",
+                },
+              ].map((item, i) => (
+                <VStack key={i} gap={4}>
+                  <Box
+                    w="14"
+                    h="14"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    borderRadius="full"
+                    bg="whiteAlpha.200"
+                  >
+                    <Icon as={item.icon} boxSize={6} />
+                  </Box>
+                  <Heading size="md">{item.title}</Heading>
+                  <Text textAlign="center" color="primary.100">
+                    {item.text}
+                  </Text>
+                </VStack>
+              ))}
+            </SimpleGrid>
+          </Container>
+        </Box>
+      </ScrollReveal>
 
       {/* Testimonials Slider */}
-      <TestimonialsSection />
+      <ScrollReveal>
+        <TestimonialsSection />
+      </ScrollReveal>
 
       {/* CTA Section */}
-      <Container maxW="4xl" textAlign="center" py={24} px={6}>
-        <Heading mb={4}>Redo att beställa?</Heading>
-        <Text fontSize="lg" color="gray.700" mb={8}>
-          Utforska våra produkter och börja handla direkt online.
-        </Text>
-        <HStack justify="center" gap={4}>
-          <Link to="/webshop">
-            <Button size="lg">Till Produkterna</Button>
-          </Link>
-          <Link to="/contact">
-            <Button variant="outline" size="lg">
-              Få offert
-            </Button>
-          </Link>
-        </HStack>
-      </Container>
+      <ScrollReveal>
+        <Container maxW="4xl" textAlign="center" py={24} px={6}>
+          <Heading mb={4}>Redo att beställa?</Heading>
+          <Text fontSize="lg" color="gray.700" mb={8}>
+            Utforska våra produkter och börja handla direkt online.
+          </Text>
+          <HStack justify="center" gap={4}>
+            <Link to="/products">
+              <Button size="lg">Till Produkterna</Button>
+            </Link>
+            <Link to="/contact">
+              <Button variant="outline" size="lg">
+                Få offert
+              </Button>
+            </Link>
+          </HStack>
+        </Container>
+      </ScrollReveal>
     </Box>
   );
 };

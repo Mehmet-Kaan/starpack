@@ -35,6 +35,9 @@ const Product = ({ product }: ProductProps) => {
       p={4}
       bg="white"
       _hover={{ transform: "scale(1.02)", transition: "transform 0.35s" }}
+      display={"flex"}
+      justifyContent={"center"}
+      w={"fit-content"}
     >
       <Stack gap={3}>
         <Link to={`/product/${product.id}`}>

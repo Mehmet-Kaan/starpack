@@ -1,12 +1,5 @@
-import {
-  Box,
-  Flex,
-  Text,
-  Link,
-  IconButton,
-  Icon,
-  HStack,
-} from "@chakra-ui/react";
+import { Box, Flex, Text, IconButton, Icon, HStack } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { FaGithub, FaTwitter, FaLinkedin, FaStar } from "react-icons/fa";
 
 const Footer = () => {
@@ -32,54 +25,59 @@ const Footer = () => {
         {/* Right Side */}
         <Flex gap={4}>
           <Link
-            href="/about"
+            to="/about"
             color="white"
-            _hover={{ textDecoration: "underline" }}
+            // _hover={{ textDecoration: "underline" }}
           >
             About
           </Link>
           <Link
-            href="/contact"
+            to="/contact"
             color="white"
-            _hover={{ textDecoration: "underline" }}
+            // _hover={{ textDecoration: "underline" }}
           >
             Contact
           </Link>
           <Link
-            href="/privacy"
+            to="/privacy"
             color="white"
-            _hover={{ textDecoration: "underline" }}
+            // _hover={{ textDecoration: "underline" }}
           >
             Privacy
+          </Link>
+          <Link
+            to="/faq"
+            color="white"
+            // _hover={{ textDecoration: "underline" }}
+          >
+            FAQ
           </Link>
         </Flex>
 
         {/* Social Icons */}
         <Flex gap={2}>
-          <Link href="https://github.com/" target="_blank" aria-label="Github">
+          <Link to="https://github.com/" target="_blank" aria-label="Github">
             <IconButton
               variant="ghost"
               color="white"
               _hover={{ bg: "primary.800" }}
-            />
-            <Icon as={FaGithub} />
+            >
+              <Icon as={FaGithub} />
+            </IconButton>
           </Link>
 
-          <Link
-            href="https://twitter.com/"
-            target="_blank"
-            aria-label="Twitter"
-          >
+          <Link to="https://twitter.com/" target="_blank" aria-label="Twitter">
             <IconButton
               variant="ghost"
               color="white"
               _hover={{ bg: "primary.800" }}
-            />
-            <Icon as={FaTwitter} />
+            >
+              <Icon as={FaTwitter} />
+            </IconButton>
           </Link>
 
           <Link
-            href="https://linkedin.com/"
+            to="https://linkedin.com/"
             target="_blank"
             aria-label="Linkedin"
           >
@@ -87,8 +85,9 @@ const Footer = () => {
               variant="ghost"
               color="white"
               _hover={{ bg: "primary.800" }}
-            />
-            <Icon as={FaLinkedin} />
+            >
+              <Icon as={FaLinkedin} />
+            </IconButton>
           </Link>
         </Flex>
       </Flex>

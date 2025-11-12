@@ -253,7 +253,7 @@ const ProductView = () => {
 
   return (
     <Container maxW="7xl" py={8}>
-      <Button variant="ghost" mb={6} onClick={() => navigate("/webshop")}>
+      <Button variant="ghost" mb={6} onClick={() => navigate("/products")}>
         <Icon as={FaArrowLeft} mr={2} />
         Back to Products
       </Button>

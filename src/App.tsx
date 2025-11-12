@@ -110,7 +110,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Webshop from "./pages/Webshop.js";
+import Products from "./pages/Products.js";
 import Profile from "./pages/Profile";
 import ProductView from "./pages/ProductView.js";
 import Checkout from "./pages/Checkout";
@@ -124,6 +124,8 @@ import CartDrawer from "./components/Checkout/CartDrawer.js";
 import SignOut from "./auth/SignOut.jsx";
 import PageTransition from "./components/PageTransition.js";
 import { AnimatePresence } from "framer-motion";
+import Privacy from "./pages/Privacy.js";
+import FAQ from "./pages/FAQ.js";
 
 const AppContent = () => {
   const { isOpen, closeCart } = useCartDrawer();
@@ -145,10 +147,10 @@ const AppContent = () => {
               }
             />
             <Route
-              path="/webshop"
+              path="/products"
               element={
                 <PageTransition>
-                  <Webshop />
+                  <Products />
                 </PageTransition>
               }
             />
@@ -173,6 +175,22 @@ const AppContent = () => {
               element={
                 <PageTransition>
                   <Contact />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/privacy"
+              element={
+                <PageTransition>
+                  <Privacy />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/faq"
+              element={
+                <PageTransition>
+                  <FAQ />
                 </PageTransition>
               }
             />

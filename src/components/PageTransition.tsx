@@ -27,19 +27,54 @@
 
 // export default PageTransition;
 
+//Without scroll to top animation
+// import { motion } from "framer-motion";
+
+// interface PageTransitionProps {
+//   children: React.ReactNode;
+// }
+
+// const PageTransition = ({ children }: PageTransitionProps) => {
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0, y: 10 }}
+//       animate={{ opacity: 1, y: 0 }}
+//       exit={{ opacity: 0, y: -10 }}
+//       transition={{ duration: 0.4, ease: "easeInOut" }} // slow enough
+//       style={{ position: "relative" }}
+//     >
+//       {children}
+//     </motion.div>
+//   );
+// };
+
+// export default PageTransition;
+
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 interface PageTransitionProps {
   children: React.ReactNode;
 }
 
 const PageTransition = ({ children }: PageTransitionProps) => {
+  const { pathname } = useLocation();
+
+  // Scroll to top on page change
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [pathname]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.4, ease: "easeInOut" }} // slow enough
+      transition={{ duration: 0.4, ease: "easeInOut" }} // page transition speed
       style={{ position: "relative" }}
     >
       {children}
