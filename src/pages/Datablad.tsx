@@ -63,7 +63,7 @@ const Datablad = () => {
   const databladFiles: DatabladFile[] = DATABLAD_FILES.map((file) => ({
     fileName: file,
     displayName: file.replace(/\.pdf$/i, "").replace(/\s*-\s*Datablad/gi, ""),
-    url: `/datablads/${file}`,
+    url: `/starpack/datablads/${file}`,
   }));
 
   // Filter datablads by search term
