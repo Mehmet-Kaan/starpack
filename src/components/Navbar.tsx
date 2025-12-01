@@ -18,6 +18,7 @@ import {
   FaShoppingCart,
   FaPhone,
   FaStar,
+  FaFilePdf,
 } from "react-icons/fa";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { useCart } from "./Contexts/CartContext.js";

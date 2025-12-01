@@ -122,19 +122,25 @@ import {
 } from "./components/Contexts/CartDrawerContext";
 import CartDrawer from "./components/Checkout/CartDrawer.js";
 import SignOut from "./auth/SignOut.jsx";
+import Signin from "./auth/Signin.jsx";
+import Signup from "./auth/Signup.jsx";
 import PageTransition from "./components/PageTransition.js";
 import { AnimatePresence } from "framer-motion";
 import Privacy from "./pages/Privacy.js";
 import FAQ from "./pages/FAQ.js";
+import Datablad from "./pages/Datablad";
 
 const AppContent = () => {
   const { isOpen, closeCart } = useCartDrawer();
   const location = useLocation(); // useLocation for AnimatePresence
+  
+  // Hide navbar and footer on signin/signup pages
+  const isAuthPage = location.pathname === "/signin" || location.pathname === "/signup";
 
   return (
     <Flex direction="column" minH="100vh" color={"black"}>
-      <Navbar />
-      <CartDrawer isOpen={isOpen} onClose={closeCart} />
+      {!isAuthPage && <Navbar />}
+      {!isAuthPage && <CartDrawer isOpen={isOpen} onClose={closeCart} />}
       <Box flex="1">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
@@ -195,6 +201,14 @@ const AppContent = () => {
               }
             />
             <Route
+              path="/datablad"
+              element={
+                <PageTransition>
+                  <Datablad />
+                </PageTransition>
+              }
+            />
+            <Route
               path="/profile"
               element={
                 <PageTransition>
@@ -210,11 +224,27 @@ const AppContent = () => {
                 </PageTransition>
               }
             />
+            <Route
+              path="/signin"
+              element={
+                <PageTransition>
+                  <Signin />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <PageTransition>
+                  <Signup />
+                </PageTransition>
+              }
+            />
             <Route path="/signout" element={<SignOut />} />
           </Routes>
         </AnimatePresence>
       </Box>
-      <Footer />
+      {!isAuthPage && <Footer />}
     </Flex>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   SimpleGrid,
   Box,
@@ -10,20 +10,137 @@ import {
   Flex,
   Spinner,
   Container,
+  Icon,
 } from "@chakra-ui/react";
 import { useCart } from "../components/Contexts/CartContext";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  updateDoc,
+  doc,
+  getDoc,
+  getDocs,
+} from "firebase/firestore";
 import { db } from "../components/firebase";
 import type { ProductType } from "../hooks/types";
 import Product from "../components/Products/product";
 import ScrollReveal from "../hooks/ScrollReveal";
+import ConfirmationDialog from "../components/Admin/ConfirmationDialog";
+import AdminEditProduct from "../components/Admin/AdminEditProduct";
+import { FaPlus } from "react-icons/fa";
+import { AuthContext } from "../auth/AuthProvider";
+import AddNewProduct from "../components/Admin/AddNewProduct";
+// import { useProducts } from "../hooks/useProducts";
 
 const Products = () => {
+  const { isAdmin } = useContext(AuthContext);
+
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
+    null
+  );
+
+  const [fields, setFields] = useState({
+    name: "",
+    description: "",
+    price: "",
+    group: "",
+    image: "",
+  });
+
+  const [isAddNewProductDialogOpen, setIsAddNewProductDialogOpen] =
+    useState(false);
+  const [addProductSure, setAddProductSure] = useState(false);
+
+  const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const openEditModal = (product: ProductType) => {
+    setSelectedProduct(product);
+    setFields({
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      group: product.group,
+      image: product.image,
+    });
+    setIsEditing(true);
+  };
+
+  const handleDeleteBtn = (product: ProductType) => {
+    setSelectedProduct(product);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleSaveUpdate = async () => {
+    if (!selectedProduct) return;
+
+    try {
+      setIsUpdating(true); // ⭐ Start animation
+
+      await updateDoc(doc(db, "products", selectedProduct.id), {
+        ...fields,
+        updatedAt: new Date(),
+      });
+
+      // ⭐ Update the central lastUpdated document
+      await updateDoc(doc(db, "products", "lastUpdated"), {
+        time: new Date(),
+      });
+
+      // ⭐ Update localStorage immediately
+      localStorage.setItem("productsLastUpdated", String(Date.now()));
+
+      // ⭐ Build NEW updated array
+      const updatedProducts = products.map((p) =>
+        p.id === selectedProduct.id ? { ...p, ...fields } : p
+      );
+
+      // ⭐ Update state
+      setProducts(updatedProducts);
+
+      // ⭐ Save the NEW version to localStorage
+      localStorage.setItem("products", JSON.stringify(updatedProducts));
+
+      setIsSaveDialogOpen(false);
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Error updating product", err);
+    } finally {
+      setIsUpdating(false); // ⭐ Stop animation
+    }
+  };
+
+  const handleDeleteProduct = async () => {
+    console.log(selectedProduct);
+
+    setIsUpdating(true);
+
+    setIsDeleteDialogOpen(false);
+
+    setTimeout(() => {
+      setIsUpdating(false);
+    }, 3000);
+  };
+
+  const handleAddNewProduct = async () => {
+    console.log(selectedProduct);
+    setAddProductSure(false);
+  };
+
   const [filter, setFilter] = useState("");
   const [sortAsc, setSortAsc] = useState(true);
   const { cart } = useCart();
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const categories = [
+    "All",
+    ...new Set(products.map((p) => p.group || "Other")),
+  ];
 
   useEffect(() => {
     // Fetch products from backend if updated
@@ -202,7 +319,9 @@ const Products = () => {
           const snapshot = await getDocs(productsCollection);
 
           const productsData = snapshot.docs
-            .filter((doc) => doc.id !== "lastUpdated")
+            .filter(
+              (doc) => doc.id !== "lastUpdated" && doc.id !== "Product Groups"
+            )
             .map((doc) => {
               const data = doc.data();
               return {
@@ -240,8 +359,13 @@ const Products = () => {
     fetchProductsFromFirestore();
   }, []);
 
-  // Filter products by name or description
-  const filteredProducts = products.filter(
+  const categoryFiltered =
+    selectedCategory === "All"
+      ? products
+      : products.filter((p) => p.group === selectedCategory);
+
+  // existing search filter
+  const filteredProducts = categoryFiltered.filter(
     (p) =>
       p.name.toLowerCase().includes(filter.toLowerCase()) ||
       (p.description ?? "").toLowerCase().includes(filter.toLowerCase()) ||
@@ -259,6 +383,48 @@ const Products = () => {
 
   return (
     <Box py={{ base: 10, md: 16 }} px={{ base: 6, md: 12 }}>
+      <AdminEditProduct
+        isOpen={isEditing}
+        onClose={() => setIsEditing(false)}
+        product={selectedProduct}
+        fields={fields}
+        setFields={setFields}
+        onSave={() => setIsSaveDialogOpen(true)}
+        onDelete={() => setIsDeleteDialogOpen(true)}
+      />
+      <ConfirmationDialog
+        isOpen={isSaveDialogOpen}
+        onClose={() => setIsSaveDialogOpen(false)}
+        onConfirm={handleSaveUpdate}
+        title="Save Changes?"
+        description={`Do you want to save changes for ${selectedProduct?.name}?`}
+        btnText="Save"
+      />
+      <ConfirmationDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onConfirm={handleDeleteProduct}
+        title="Delete Product?"
+        description={`Do you want to delete ${selectedProduct?.name}?`}
+        btnText="Delete"
+      />
+
+      <AddNewProduct
+        isOpen={isAddNewProductDialogOpen}
+        onClose={() => setIsAddNewProductDialogOpen(false)}
+        fields={fields}
+        setFields={setFields}
+        onAdd={() => setAddProductSure(true)}
+      />
+      <ConfirmationDialog
+        isOpen={addProductSure}
+        onClose={() => setAddProductSure(false)}
+        onConfirm={handleAddNewProduct}
+        title="Add a new product?"
+        description={`Do you want to add ${selectedProduct?.name} to products?`}
+        btnText="Add"
+      />
+
       <Container maxW="7xl">
         <ScrollReveal>
           <Flex
@@ -288,15 +454,15 @@ const Products = () => {
           </Flex>
         </ScrollReveal>
         {/* <Box mb={6} p={4} bg="gray.50" borderRadius="md" boxShadow="sm">
-        <Heading size="sm">Cart ({cart.length} items)</Heading>
-        {cart.length > 0 ? (
-          <Text fontSize="sm">{cart.map((c, i) => c.name).join(", ")}</Text>
-        ) : (
-          <Text fontSize="sm" color="gray.500">
-            Your cart is empty.
-          </Text>
-        )}
-      </Box> */}
+          <Heading size="sm">Cart ({cart.length} items)</Heading>
+          {cart.length > 0 ? (
+            <Text fontSize="sm">{cart.map((c, i) => c.name).join(", ")}</Text>
+          ) : (
+            <Text fontSize="sm" color="gray.500">
+              Your cart is empty.
+            </Text>
+          )}
+        </Box> */}
 
         {loading ? (
           <Flex
@@ -315,23 +481,124 @@ const Products = () => {
             </Text>
           </Flex>
         ) : (
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6}>
-            {sortedProducts.length > 0 ? (
-              sortedProducts.map((p, index) => {
-                const cartItem = cart.find((item) => item.id === p.id);
+          <ScrollReveal>
+            <Flex gap={10} flexDirection={["column", "row"]}>
+              <Box
+                minW="200px"
+                p={4}
+                bg="gray.50"
+                borderRadius="md"
+                height="fit-content"
+                boxShadow="sm"
+              >
+                <Heading size="sm" mb={3}>
+                  Categories
+                </Heading>
 
-                return (
-                  <ScrollReveal key={index}>
-                    <Product product={p} cartItem={cartItem} />
-                  </ScrollReveal>
-                );
-              })
-            ) : (
-              <Text>No products found!</Text>
-            )}
-          </SimpleGrid>
+                <Stack gap={2}>
+                  {categories.map((cat) => (
+                    <Button
+                      key={cat}
+                      variant={cat === selectedCategory ? "solid" : "ghost"}
+                      colorScheme="secondary"
+                      justifyContent="flex-start"
+                      onClick={() => setSelectedCategory(cat)}
+                    >
+                      {cat}
+                    </Button>
+                  ))}
+                </Stack>
+              </Box>
+              <Box maxHeight="calc(100vh - 70px)" overflow={"hidden"}>
+                <SimpleGrid
+                  columns={{ base: 1, md: 2, lg: 3 }}
+                  gap={6}
+                  maxHeight={"100%"}
+                  overflowY={"auto"}
+                  p={4}
+                >
+                  {isAdmin && (
+                    <ScrollReveal>
+                      <Box
+                        boxShadow="md"
+                        borderRadius="lg"
+                        p={4}
+                        bg="white"
+                        _hover={{
+                          bg: "black",
+                          color: "white",
+                          transform: "scale(1.02)",
+                          transition: "transform 0.35s",
+                        }}
+                        height={"100%"}
+                        display="flex"
+                        justifyContent="center"
+                        alignItems={"center"}
+                        onClick={() => {
+                          setFields({
+                            name: "",
+                            description: "",
+                            price: "",
+                            group:
+                              selectedCategory !== "All"
+                                ? selectedCategory
+                                : "",
+                            image: "",
+                          });
+
+                          setIsAddNewProductDialogOpen(true);
+                        }}
+                      >
+                        <Icon as={FaPlus} size={"2xl"} />
+                      </Box>
+                    </ScrollReveal>
+                  )}
+
+                  {sortedProducts.length > 0 ? (
+                    sortedProducts.map((p, index) => {
+                      const cartItem = cart.find((item) => item.id === p.id);
+
+                      return (
+                        <ScrollReveal key={index}>
+                          <Product
+                            product={p}
+                            cartItem={cartItem}
+                            onAdminEdit={() => openEditModal(p)}
+                            onAdminDelete={() => handleDeleteBtn(p)}
+                          />
+                        </ScrollReveal>
+                      );
+                    })
+                  ) : (
+                    <Text>No products found!</Text>
+                  )}
+                </SimpleGrid>
+              </Box>
+            </Flex>
+          </ScrollReveal>
         )}
       </Container>
+      {isUpdating && (
+        <Box
+          position="fixed"
+          top={0}
+          left={0}
+          w="100vw"
+          h="100vh"
+          bg="rgba(255,255,255,0.7)"
+          backdropFilter="blur(4px)"
+          zIndex={9999}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Spinner size="xl" borderWidth="2px" animationDuration="0.65s" />
+          <Box mt={4} fontSize="lg" fontWeight="medium" color="gray.700">
+            Saving...
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 };

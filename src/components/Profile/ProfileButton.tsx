@@ -28,18 +28,18 @@ const ProfileButton = ({ onClick }: { onClick?: () => void }) => {
         </Link>
       ) : (
         <>
-          <Button
-            onClick={() => {
-              setAuthOpen(true);
-            }}
-            variant="ghost"
-            // _hover={{ bg: "whiteAlpha.200" }}
-          >
-            <Icon as={FaUser} mr={2} />
-            Log in
-          </Button>
+          <Link to="/signin">
+            <Button
+              // onClick={() => {
+              //   setAuthOpen(true);
+              // }}
+              variant="ghost"
+            >
+              <Icon as={FaUser} mr={2} />
+              Log in
+            </Button>
+          </Link>
 
-          {/* Auth Drawer */}
           <AuthDrawer
             open={authOpen}
             onOpenChange={(open: boolean) => {

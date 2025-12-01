@@ -16,6 +16,10 @@ import {
   VStack,
   Spinner,
   Icon,
+  Flex,
+  Image,
+  Container,
+  Stack,
 } from "@chakra-ui/react";
 import { collection, doc, setDoc } from "firebase/firestore";
 
@@ -92,154 +96,262 @@ const Signup = () => {
   };
 
   return (
-    <Box
-      display="flex"
-      flexDir="column"
-      justifyContent={"center"}
-      alignItems="center"
-      w={{ base: "90%", md: "400px" }}
-      p={8}
-      m="2rem auto"
-      bg="rgba(255, 255, 255, 0.1)"
-      backdropFilter="blur(10px)"
-      borderRadius="10px"
-      boxShadow="0 8px 32px rgba(0, 0, 0, 0.25)"
-      color="black"
-    >
-      {loading ? (
-        <Spinner size="xl" color="blue.400" thickness="4px" speed="0.7s" />
-      ) : (
-        <VStack spacing={4} as="form" w="100%" onSubmit={handleSubmit}>
-          <Heading>Sign Up!</Heading>
-
-          {errMsg && (
-            <Text ref={errRef} color="red.400" bg="rgba(255,0,0,0.1)" p={2} borderRadius="md">
-              {errMsg}
-            </Text>
-          )}
-
-          {/* Name Field */}
-          <Box w="100%">
-            <Text fontWeight="medium" mb={1}>Name:</Text>
-            <HStack>
-              <Input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                bg="rgba(255,255,255,0.15)"
-                _focus={{ bg: "rgba(255,255,255,0.25)" }}
-                ref={userRef}
-                autoComplete="off"
-                required
-              />
-              {validName ? (
-                <Icon as={FontAwesomeIcon} icon={faCheck} color="green.400" />
-              ) : name ? (
-                <Icon as={FontAwesomeIcon} icon={faTimes} color="red.400" />
-              ) : null}
-            </HStack>
-            {!validName && name && (
-              <Text fontSize="sm" color="gray.300" mt={1}>
-                <FontAwesomeIcon icon={faInfoCircle} /> 4–15 letters.
-              </Text>
-            )}
-          </Box>
-
-          {/* Email Field */}
-          <Box w="100%">
-            <Text fontWeight="medium" mb={1}>Email:</Text>
-            <HStack>
-              <Input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                bg="rgba(255,255,255,0.15)"
-                _focus={{ bg: "rgba(255,255,255,0.25)" }}
-                required
-              />
-              {validEmail ? (
-                <Icon as={FontAwesomeIcon} icon={faCheck} color="green.400" />
-              ) : email ? (
-                <Icon as={FontAwesomeIcon} icon={faTimes} color="red.400" />
-              ) : null}
-            </HStack>
-            {!validEmail && email && (
-              <Text fontSize="sm" color="gray.300" mt={1}>
-                <FontAwesomeIcon icon={faInfoCircle} /> Must end with @gmail.com or @hotmail.com
-              </Text>
-            )}
-          </Box>
-
-          {/* Password Field */}
-          <Box w="100%">
-            <Text fontWeight="medium" mb={1}>Password:</Text>
-            <HStack>
-              <Input
-                type="password"
-                value={pwd}
-                onChange={(e) => setPwd(e.target.value)}
-                bg="rgba(255,255,255,0.15)"
-                _focus={{ bg: "rgba(255,255,255,0.25)" }}
-                required
-              />
-              {validPwd ? (
-                <Icon as={FontAwesomeIcon} icon={faCheck} color="green.400" />
-              ) : pwd ? (
-                <Icon as={FontAwesomeIcon} icon={faTimes} color="red.400" />
-              ) : null}
-            </HStack>
-            {!validPwd && pwd && (
-              <Text fontSize="sm" color="gray.300" mt={1}>
-                <FontAwesomeIcon icon={faInfoCircle} /> 8–24 chars, 1 upper, 1 lower, 1 number, 1 special.
-              </Text>
-            )}
-          </Box>
-
-          {/* Confirm Password */}
-          <Box w="100%">
-            <Text fontWeight="medium" mb={1}>Confirm Password:</Text>
-            <HStack>
-              <Input
-                type="password"
-                value={matchPwd}
-                onChange={(e) => setMatchPwd(e.target.value)}
-                bg="rgba(255,255,255,0.15)"
-                _focus={{ bg: "rgba(255,255,255,0.25)" }}
-                required
-              />
-              {validMatch && matchPwd ? (
-                <Icon as={FontAwesomeIcon} icon={faCheck} color="green.400" />
-              ) : matchPwd ? (
-                <Icon as={FontAwesomeIcon} icon={faTimes} color="red.400" />
-              ) : null}
-            </HStack>
-            {!validMatch && matchPwd && (
-              <Text fontSize="sm" color="gray.300" mt={1}>
-                <FontAwesomeIcon icon={faInfoCircle} /> Passwords must match.
-              </Text>
-            )}
-          </Box>
-
-          {/* Submit */}
-          <Button
-            type="submit"
-            colorScheme="blue"
-            w="100%"
-            mt={4}
-            isDisabled={!validName || !validEmail || !validPwd || !validMatch}
-          >
-            Sign Up
-          </Button>
-
-          <Text>
-            Already a member?{" "}
-            <Link to="/signin" style={{ color: "#63b3ed" }}>
-              Sign in!
-            </Link>
+    <Flex minH="100vh" direction={{ base: "column", lg: "row" }}>
+      {/* Left Side - Image (30%) */}
+      <Box
+        w={{ base: "100%", lg: "30%" }}
+        h={{ base: "40vh", lg: "100vh" }}
+        position="relative"
+        display={{ base: "none", lg: "block" }}
+      >
+        <Image
+          src="/images/packaging-hero.jpg"
+          alt="Packaging"
+          w="100%"
+          h="100%"
+          objectFit="cover"
+          onError={(e) => {
+            const target = e.currentTarget;
+            if (target.src.indexOf("placeholder.png") === -1) {
+              target.src = "/images/placeholder.png";
+            }
+          }}
+        />
+        <Box
+          position="absolute"
+          inset={0}
+          bgGradient="linear(to-b, rgba(0,0,0,0.3), rgba(0,0,0,0.5))"
+        />
+        <VStack
+          position="absolute"
+          bottom={8}
+          left={0}
+          right={0}
+          px={8}
+          color="white"
+          align="flex-start"
+          gap={2}
+        >
+          <Heading size="lg" color="white">
+            Bli medlem idag!
+          </Heading>
+          <Text fontSize="md" color="whiteAlpha.900">
+            Skapa ditt konto och börja handla
           </Text>
         </VStack>
-      )}
-    </Box>
+      </Box>
+
+      {/* Right Side - Signup Form (70%) */}
+      <Flex
+        w={{ base: "100%", lg: "70%" }}
+        align="center"
+        justify="center"
+        bg="gray.50"
+        p={{ base: 6, md: 12 }}
+        overflowY="auto"
+      >
+        <Container maxW="md" w="100%">
+          <Box
+            bg="white"
+            borderRadius="2xl"
+            boxShadow="xl"
+            p={{ base: 8, md: 12 }}
+            w="100%"
+          >
+            {loading ? (
+              <Flex justify="center" py={12}>
+                <Spinner size="xl" color="primary.600" />
+              </Flex>
+            ) : (
+              <VStack spacing={6} as="form" w="100%" onSubmit={handleSubmit}>
+                <VStack mb={4} gap={2} align="flex-start" w="100%">
+                  <Heading size="xl" color="primary.900">
+                    Skapa konto
+                  </Heading>
+                  <Text color="gray.600">
+                    Fyll i dina uppgifter för att komma igång
+                  </Text>
+                </VStack>
+
+                {errMsg && (
+                  <Box
+                    ref={errRef}
+                    bg="red.50"
+                    borderColor="red.200"
+                    borderWidth="1px"
+                    borderRadius="md"
+                    p={4}
+                    w="100%"
+                    aria-live="assertive"
+                  >
+                    <Text color="red.600" fontSize="sm" fontWeight="medium">
+                      {errMsg}
+                    </Text>
+                  </Box>
+                )}
+
+                {/* Name Field */}
+                <Box w="100%">
+                  <Text fontWeight="medium" mb={2} color="gray.700">
+                    Namn
+                  </Text>
+                  <HStack>
+                    <Input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Ditt namn"
+                      size="lg"
+                      borderRadius="lg"
+                      borderColor="gray.300"
+                      _hover={{ borderColor: "primary.400" }}
+                      _focus={{ borderColor: "primary.500", boxShadow: "0 0 0 1px var(--chakra-colors-primary-500)" }}
+                      ref={userRef}
+                      autoComplete="name"
+                      required
+                    />
+                    {validName ? (
+                      <Icon as={FontAwesomeIcon} icon={faCheck} color="green.500" boxSize={5} />
+                    ) : name ? (
+                      <Icon as={FontAwesomeIcon} icon={faTimes} color="red.500" boxSize={5} />
+                    ) : null}
+                  </HStack>
+                  {!validName && name && (
+                    <Text fontSize="sm" color="gray.500" mt={1} display="flex" alignItems="center" gap={1}>
+                      <FontAwesomeIcon icon={faInfoCircle} /> 4–15 bokstäver.
+                    </Text>
+                  )}
+                </Box>
+
+                {/* Email Field */}
+                <Box w="100%">
+                  <Text fontWeight="medium" mb={2} color="gray.700">
+                    E-postadress
+                  </Text>
+                  <HStack>
+                    <Input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="din@epost.se"
+                      size="lg"
+                      borderRadius="lg"
+                      borderColor="gray.300"
+                      _hover={{ borderColor: "primary.400" }}
+                      _focus={{ borderColor: "primary.500", boxShadow: "0 0 0 1px var(--chakra-colors-primary-500)" }}
+                      autoComplete="email"
+                      required
+                    />
+                    {validEmail ? (
+                      <Icon as={FontAwesomeIcon} icon={faCheck} color="green.500" boxSize={5} />
+                    ) : email ? (
+                      <Icon as={FontAwesomeIcon} icon={faTimes} color="red.500" boxSize={5} />
+                    ) : null}
+                  </HStack>
+                  {!validEmail && email && (
+                    <Text fontSize="sm" color="gray.500" mt={1} display="flex" alignItems="center" gap={1}>
+                      <FontAwesomeIcon icon={faInfoCircle} /> Måste sluta med @gmail.com eller @hotmail.com
+                    </Text>
+                  )}
+                </Box>
+
+                {/* Password Field */}
+                <Box w="100%">
+                  <Text fontWeight="medium" mb={2} color="gray.700">
+                    Lösenord
+                  </Text>
+                  <HStack>
+                    <Input
+                      type="password"
+                      value={pwd}
+                      onChange={(e) => setPwd(e.target.value)}
+                      placeholder="••••••••"
+                      size="lg"
+                      borderRadius="lg"
+                      borderColor="gray.300"
+                      _hover={{ borderColor: "primary.400" }}
+                      _focus={{ borderColor: "primary.500", boxShadow: "0 0 0 1px var(--chakra-colors-primary-500)" }}
+                      autoComplete="new-password"
+                      required
+                    />
+                    {validPwd ? (
+                      <Icon as={FontAwesomeIcon} icon={faCheck} color="green.500" boxSize={5} />
+                    ) : pwd ? (
+                      <Icon as={FontAwesomeIcon} icon={faTimes} color="red.500" boxSize={5} />
+                    ) : null}
+                  </HStack>
+                  {!validPwd && pwd && (
+                    <Text fontSize="sm" color="gray.500" mt={1} display="flex" alignItems="center" gap={1}>
+                      <FontAwesomeIcon icon={faInfoCircle} /> 8–24 tecken, 1 stor bokstav, 1 liten bokstav, 1 siffra, 1 specialtecken.
+                    </Text>
+                  )}
+                </Box>
+
+                {/* Confirm Password */}
+                <Box w="100%">
+                  <Text fontWeight="medium" mb={2} color="gray.700">
+                    Bekräfta lösenord
+                  </Text>
+                  <HStack>
+                    <Input
+                      type="password"
+                      value={matchPwd}
+                      onChange={(e) => setMatchPwd(e.target.value)}
+                      placeholder="••••••••"
+                      size="lg"
+                      borderRadius="lg"
+                      borderColor="gray.300"
+                      _hover={{ borderColor: "primary.400" }}
+                      _focus={{ borderColor: "primary.500", boxShadow: "0 0 0 1px var(--chakra-colors-primary-500)" }}
+                      autoComplete="new-password"
+                      required
+                    />
+                    {validMatch && matchPwd ? (
+                      <Icon as={FontAwesomeIcon} icon={faCheck} color="green.500" boxSize={5} />
+                    ) : matchPwd ? (
+                      <Icon as={FontAwesomeIcon} icon={faTimes} color="red.500" boxSize={5} />
+                    ) : null}
+                  </HStack>
+                  {!validMatch && matchPwd && (
+                    <Text fontSize="sm" color="gray.500" mt={1} display="flex" alignItems="center" gap={1}>
+                      <FontAwesomeIcon icon={faInfoCircle} /> Lösenorden måste matcha.
+                    </Text>
+                  )}
+                </Box>
+
+                {/* Submit */}
+                <Button
+                  type="submit"
+                  size="lg"
+                  w="100%"
+                  bg="black"
+                  color="white"
+                  borderRadius="full"
+                  fontWeight="semibold"
+                  _hover={{ bg: "gray.800", transform: "translateY(-2px)" }}
+                  _active={{ transform: "translateY(0)" }}
+                  transition="all 0.2s"
+                  isDisabled={!validName || !validEmail || !validPwd || !validMatch}
+                  boxShadow="lg"
+                  mt={2}
+                >
+                  Skapa konto
+                </Button>
+
+                <Text mt={4} textAlign="center" color="gray.600">
+                  Har du redan ett konto?{" "}
+                  <Link to="/signin">
+                    <Text as="span" color="primary.600" fontWeight="semibold" _hover={{ textDecoration: "underline" }}>
+                      Logga in här
+                    </Text>
+                  </Link>
+                </Text>
+              </VStack>
+            )}
+          </Box>
+        </Container>
+      </Flex>
+    </Flex>
   );
 };
 

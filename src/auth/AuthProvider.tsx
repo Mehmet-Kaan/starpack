@@ -96,6 +96,7 @@ interface AuthContextType {
   currentUser: User | null;
   idToken: string | null;
   loading: boolean;
+  isAdmin: boolean;
 }
 
 // Provide default values for context
@@ -103,6 +104,7 @@ export const AuthContext = createContext<AuthContextType>({
   currentUser: null,
   idToken: null,
   loading: true,
+  isAdmin: false,
 });
 
 // Props type for AuthProvider
@@ -114,6 +116,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [idToken, setIdToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const ADMIN_EMAILS = ["admin@starpack.com", "mkaan@hotmail.com"];
 
   useEffect(() => {
     setPersistence(auth, browserLocalPersistence)
@@ -123,6 +128,10 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
             const token = await user.getIdToken(); // Get fresh token
             setCurrentUser(user);
             setIdToken(token);
+
+            // Normalize email to a string and check admin list
+            const email = user.email ?? "";
+            setIsAdmin(ADMIN_EMAILS.includes(email));
 
             // Optional: store minimal data locally (no sensitive info)
             sessionStorage.setItem("user_uid", user.uid);
@@ -141,7 +150,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       });
   }, []);
 
-  const value: AuthContextType = { currentUser, idToken, loading };
+  const value: AuthContextType = { currentUser, idToken, loading, isAdmin };
 
   return (
     <AuthContext.Provider value={value}>

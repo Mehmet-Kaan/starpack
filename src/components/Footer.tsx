@@ -1,6 +1,6 @@
 import { Box, Flex, Text, IconButton, Icon, HStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { FaGithub, FaTwitter, FaLinkedin, FaStar } from "react-icons/fa";
+import { FaGithub, FaTwitter, FaLinkedin, FaStar, FaFilePdf } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -51,6 +51,12 @@ const Footer = () => {
             // _hover={{ textDecoration: "underline" }}
           >
             FAQ
+          </Link>
+          <Link 
+            to="/datablad"
+            color="white"
+          >
+            <Icon as={FaFilePdf} /> Datablad
           </Link>
         </Flex>
 

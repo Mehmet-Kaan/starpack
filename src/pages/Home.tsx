@@ -21,6 +21,7 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaStar,
+  FaBoxOpen,
 } from "react-icons/fa6";
 
 import "../styles/home.css";
@@ -109,11 +110,30 @@ const Home = () => {
                     Sverige.
                   </Text>
                   <HStack gap={4} wrap="wrap">
-                    <Link to="/products">
-                      <Button size="lg">Utforska Produkter</Button>
+                    <Link to="/webshop">
+                      <Button 
+                        size="lg" 
+                        rounded="full"
+                        fontWeight="semibold"
+                        bg="black"
+                        color="white"
+                        _hover={{ bg: "gray.800", transform: "translateY(-2px)" }}
+                        transition="all 0.2s"
+                        boxShadow="lg"
+                      >
+                        Utforska Produkter
+                      </Button>
                     </Link>
                     <Link to="/contact">
-                      <Button variant="outline" size="lg">
+                      <Button 
+                        variant="outline" 
+                        size="lg"
+                        rounded="full"
+                        fontWeight="semibold"
+                        borderWidth="2px"
+                        _hover={{ bg: "whiteAlpha.200", transform: "translateY(-2px)" }}
+                        transition="all 0.2s"
+                      >
                         Kontakta oss
                       </Button>
                     </Link>
@@ -154,20 +174,32 @@ const Home = () => {
         </Container>
       </Box>
       {/* Stats Strip */}
-      <Box bg="white" borderTopWidth="1px" borderBottomWidth="1px">
-        <Container maxW="7xl" px={{ base: 6, md: 12 }} py={8}>
+      <Box bg="white" borderTopWidth="1px" borderBottomWidth="1px" borderColor="primary.100">
+        <Container maxW="7xl" px={{ base: 6, md: 12 }} py={12}>
           <SimpleGrid columns={{ base: 2, md: 4 }} gap={{ base: 6, md: 10 }}>
             {[
-              { value: "10k+", label: "Ordrar levererade" },
-              { value: "1–2 dgr", label: "Normal leveranstid" },
-              { value: "500+", label: "Produkter i lager" },
-              { value: "4.9/5", label: "Kundbetyg" },
+              { value: "10k+", label: "Ordrar levererade", icon: FaTruckFast },
+              { value: "1–2 dgr", label: "Normal leveranstid", icon: FaTruckFast },
+              { value: "500+", label: "Produkter i lager", icon: FaBoxOpen },
+              { value: "4.9/5", label: "Kundbetyg", icon: FaStar },
             ].map((s, i) => (
-              <VStack key={i} gap={0} textAlign="center">
-                <Heading size="lg" color="primary.800">
+              <VStack key={i} gap={3} textAlign="center">
+                <Box
+                  w="12"
+                  h="12"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  borderRadius="full"
+                  bg="primary.50"
+                  color="primary.700"
+                >
+                  <Icon as={s.icon} boxSize={5} />
+                </Box>
+                <Heading size="xl" color="primary.800" fontWeight="bold">
                   {s.value}
                 </Heading>
-                <Text color="gray.600" fontSize="sm">
+                <Text color="gray.600" fontSize="sm" fontWeight="medium">
                   {s.label}
                 </Text>
               </VStack>
@@ -178,10 +210,22 @@ const Home = () => {
 
       {/* Product Categories */}
       <ScrollReveal>
-        <Container maxW="7xl" py={20} px={{ base: 6, md: 12 }}>
-          <Heading textAlign="center" mb={12}>
-            Våra Produktkategorier
-          </Heading>
+        <Container maxW="7xl" py={24} px={{ base: 6, md: 12 }}>
+          <VStack mb={12} gap={2}>
+            <Badge
+              colorScheme="primary"
+              borderRadius="full"
+              px={4}
+              py={1}
+              fontSize="sm"
+              fontWeight="semibold"
+            >
+              Produktkategorier
+            </Badge>
+            <Heading textAlign="center" size="2xl" color="primary.900">
+              Våra Produktkategorier
+            </Heading>
+          </VStack>
           <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
             {[
               {
@@ -204,29 +248,37 @@ const Home = () => {
                 key={i}
                 bg="white"
                 borderRadius="xl"
-                boxShadow="sm"
+                boxShadow="md"
                 overflow="hidden"
-                transition="0.3s"
-                _hover={{ boxShadow: "xl", transform: "translateY(-4px)" }}
+                transition="all 0.3s"
+                borderWidth="1px"
+                borderColor="transparent"
+                _hover={{ boxShadow: "xl", transform: "translateY(-6px)", borderColor: "primary.200" }}
               >
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  h="220px"
-                  w="100%"
-                  objectFit="cover"
-                  onError={(e) => {
-                    const target = e.currentTarget as HTMLImageElement;
-                    if (target.src.indexOf("placeholder.png") === -1) {
-                      target.src = "./images/placeholder.png";
-                    }
-                  }}
-                />
-                <Box p={6}>
-                  <Heading size="md" mb={2}>
+                <Box position="relative" overflow="hidden">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    h="240px"
+                    w="100%"
+                    objectFit="cover"
+                    transition="transform 0.3s"
+                    _hover={{ transform: "scale(1.05)" }}
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLImageElement;
+                      if (target.src.indexOf("placeholder.png") === -1) {
+                        target.src = "./images/placeholder.png";
+                      }
+                    }}
+                  />
+                </Box>
+                <Box p={8}>
+                  <Heading size="lg" mb={3} color="primary.900">
                     {item.title}
                   </Heading>
-                  <Text color="gray.600">{item.text}</Text>
+                  <Text color="gray.600" fontSize="md" lineHeight="tall">
+                    {item.text}
+                  </Text>
                 </Box>
               </Box>
             ))}
@@ -236,11 +288,21 @@ const Home = () => {
 
       {/* Featured Products */}
       <ScrollReveal>
-        <Container maxW="7xl" py={6} px={{ base: 6, md: 12 }}>
-          <Flex justify="space-between" align="center" mb={4}>
-            <Heading size="lg">Utvalda produkter</Heading>
-            <Link to="/products">
-              <Button variant="ghost">Se alla</Button>
+        <Container maxW="7xl" py={12} px={{ base: 6, md: 12 }}>
+          <Flex justify="space-between" align="center" mb={8}>
+            <VStack align="flex-start" gap={1}>
+              <Heading size="xl" color="primary.900">Utvalda produkter</Heading>
+              <Text color="gray.600" fontSize="sm">Populära produkter från vårt sortiment</Text>
+            </VStack>
+            <Link to="/webshop">
+              <Button 
+                variant="ghost" 
+                rounded="full"
+                fontWeight="semibold"
+                _hover={{ bg: "primary.50" }}
+              >
+                Se alla →
+              </Button>
             </Link>
           </Flex>
           {/* Mobile: horizontal scroll, Desktop: grid */}
@@ -270,30 +332,38 @@ const Home = () => {
               ].map((p, i) => (
                 <Box
                   key={i}
-                  minW="260px"
+                  minW="280px"
                   bg="white"
                   borderRadius="xl"
-                  boxShadow="sm"
+                  boxShadow="md"
                   overflow="hidden"
+                  transition="all 0.3s"
+                  borderWidth="1px"
+                  borderColor="transparent"
+                  _hover={{ boxShadow: "xl", transform: "translateY(-4px)", borderColor: "primary.200" }}
                 >
-                  <Image
-                    src={p.image}
-                    alt={p.title}
-                    h="160px"
-                    w="100%"
-                    objectFit="cover"
-                    onError={(e) => {
-                      const target = e.currentTarget as HTMLImageElement;
-                      if (target.src.indexOf("placeholder.png") === -1) {
-                        target.src = "/starpack/images/placeholder.png";
-                      }
-                    }}
-                  />
-                  <Box p={4}>
-                    <Heading size="sm" mb={1}>
+                  <Box position="relative" overflow="hidden">
+                    <Image
+                      src={p.image}
+                      alt={p.title}
+                      h="180px"
+                      w="100%"
+                      objectFit="cover"
+                      transition="transform 0.3s"
+                      _hover={{ transform: "scale(1.05)" }}
+                      onError={(e) => {
+                        const target = e.currentTarget as HTMLImageElement;
+                        if (target.src.indexOf("placeholder.png") === -1) {
+                          target.src = "/starpack/images/placeholder.png";
+                        }
+                      }}
+                    />
+                  </Box>
+                  <Box p={5}>
+                    <Heading size="md" mb={2} color="primary.900">
                       {p.title}
                     </Heading>
-                    <Text color="primary.700" fontWeight="semibold">
+                    <Text color="primary.700" fontWeight="bold" fontSize="lg">
                       {p.price}
                     </Text>
                   </Box>
@@ -332,29 +402,36 @@ const Home = () => {
                 key={i}
                 bg="white"
                 borderRadius="xl"
-                boxShadow="sm"
+                boxShadow="md"
                 overflow="hidden"
-                transition="0.2s"
-                _hover={{ boxShadow: "md", transform: "translateY(-2px)" }}
+                transition="all 0.3s"
+                borderWidth="1px"
+                borderColor="transparent"
+                cursor="pointer"
+                _hover={{ boxShadow: "xl", transform: "translateY(-6px)", borderColor: "primary.200" }}
               >
-                <Image
-                  src={p.image}
-                  alt={p.title}
-                  h="160px"
-                  w="100%"
-                  objectFit="cover"
-                  onError={(e) => {
-                    const target = e.currentTarget as HTMLImageElement;
-                    if (target.src.indexOf("placeholder.png") === -1) {
-                      target.src = "/starpack/images/placeholder.png";
-                    }
-                  }}
-                />
-                <Box p={4}>
-                  <Heading size="sm" mb={1}>
+                <Box position="relative" overflow="hidden">
+                  <Image
+                    src={p.image}
+                    alt={p.title}
+                    h="200px"
+                    w="100%"
+                    objectFit="cover"
+                    transition="transform 0.3s"
+                    _hover={{ transform: "scale(1.05)" }}
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLImageElement;
+                      if (target.src.indexOf("placeholder.png") === -1) {
+                        target.src = "/starpack/images/placeholder.png";
+                      }
+                    }}
+                  />
+                </Box>
+                <Box p={5}>
+                  <Heading size="md" mb={2} color="primary.900">
                     {p.title}
                   </Heading>
-                  <Text color="primary.700" fontWeight="semibold">
+                  <Text color="primary.700" fontWeight="bold" fontSize="lg">
                     {p.price}
                   </Text>
                 </Box>
@@ -366,35 +443,47 @@ const Home = () => {
 
       {/* Trusted By Section */}
       <ScrollReveal>
-        <Box bg="primary.50" py={16}>
+        <Box bg="primary.50" py={20}>
           <Container maxW="6xl" textAlign="center">
-            <Text
-              color="primary.700"
-              textTransform="uppercase"
-              fontWeight="semibold"
-              letterSpacing="wide"
-              mb={6}
-            >
-              Pålitlig partner till företag i hela Sverige
-            </Text>
+            <VStack gap={4} mb={10}>
+              <Badge
+                colorScheme="primary"
+                borderRadius="full"
+                px={4}
+                py={1}
+                fontSize="sm"
+                fontWeight="semibold"
+              >
+                Förtroende
+              </Badge>
+              <Heading size="xl" color="primary.900">
+                Pålitlig partner till företag i hela Sverige
+              </Heading>
+            </VStack>
             <Flex
               justify="center"
               align="center"
               wrap="wrap"
-              gap={10}
-              opacity={0.9}
+              gap={8}
             >
               {["PostNord", "Schenker", "IKEA", "Bring", "Apotea"].map(
                 (name) => (
                   <Box
                     key={name}
-                    px={6}
-                    py={3}
-                    borderRadius="md"
+                    px={8}
+                    py={4}
+                    borderRadius="xl"
                     bg="white"
                     boxShadow="sm"
+                    transition="all 0.2s"
+                    _hover={{ 
+                      boxShadow: "md", 
+                      transform: "translateY(-2px)",
+                    }}
+                    borderWidth="1px"
+                    borderColor="primary.100"
                   >
-                    <Text fontWeight="bold" color="gray.700" fontSize="md">
+                    <Text fontWeight="semibold" color="gray.700" fontSize="md">
                       {name}
                     </Text>
                   </Box>
@@ -407,11 +496,31 @@ const Home = () => {
 
       {/* Benefits Section */}
       <ScrollReveal>
-        <Box bg="primary.800" color="white" py={20}>
+        <Box 
+          bgGradient="linear(to-b, primary.800, primary.900)" 
+          color="white" 
+          py={24}
+        >
           <Container maxW="7xl" px={{ base: 6, md: 12 }}>
-            <Heading textAlign="center" mb={12}>
-              Varför välja oss?
-            </Heading>
+            <VStack mb={16} gap={3}>
+              <Badge
+                bg="whiteAlpha.200"
+                color="white"
+                borderRadius="full"
+                px={4}
+                py={1}
+                fontSize="sm"
+                fontWeight="semibold"
+              >
+                Varför oss?
+              </Badge>
+              <Heading textAlign="center" size="2xl" mb={4}>
+                Varför välja oss?
+              </Heading>
+              <Text textAlign="center" color="primary.100" fontSize="lg" maxW="2xl">
+                Vi erbjuder kvalitet, snabbhet och hållbarhet i varje leverans
+              </Text>
+            </VStack>
             <SimpleGrid columns={{ base: 1, md: 3 }} gap={10}>
               {[
                 {
@@ -430,20 +539,22 @@ const Home = () => {
                   text: "Återvinningsbara och miljövänliga förpackningar.",
                 },
               ].map((item, i) => (
-                <VStack key={i} gap={4}>
+                <VStack key={i} gap={5} p={6} borderRadius="xl" _hover={{ bg: "whiteAlpha.100" }} transition="all 0.3s">
                   <Box
-                    w="14"
-                    h="14"
+                    w="16"
+                    h="16"
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
                     borderRadius="full"
                     bg="whiteAlpha.200"
+                    borderWidth="2px"
+                    borderColor="whiteAlpha.300"
                   >
-                    <Icon as={item.icon} boxSize={6} />
+                    <Icon as={item.icon} boxSize={7} />
                   </Box>
-                  <Heading size="md">{item.title}</Heading>
-                  <Text textAlign="center" color="primary.100">
+                  <Heading size="lg">{item.title}</Heading>
+                  <Text textAlign="center" color="primary.100" fontSize="md" lineHeight="tall">
                     {item.text}
                   </Text>
                 </VStack>
@@ -460,22 +571,49 @@ const Home = () => {
 
       {/* CTA Section */}
       <ScrollReveal>
-        <Container maxW="4xl" textAlign="center" py={24} px={6}>
-          <Heading mb={4}>Redo att beställa?</Heading>
-          <Text fontSize="lg" color="gray.700" mb={8}>
-            Utforska våra produkter och börja handla direkt online.
-          </Text>
-          <HStack justify="center" gap={4}>
-            <Link to="/products">
-              <Button size="lg">Till Produkterna</Button>
-            </Link>
-            <Link to="/contact">
-              <Button variant="outline" size="lg">
-                Få offert
-              </Button>
-            </Link>
-          </HStack>
-        </Container>
+        <Box bgGradient="linear(to-b, white, primary.50)" py={24}>
+          <Container maxW="4xl" textAlign="center" px={6}>
+            <VStack gap={6} mb={10}>
+              <Heading size="2xl" color="primary.900" mb={2}>
+                Redo att beställa?
+              </Heading>
+              <Text fontSize="xl" color="gray.700" maxW="2xl">
+                Utforska våra produkter och börja handla direkt online.
+              </Text>
+            </VStack>
+            <HStack justify="center" gap={4} wrap="wrap">
+              <Link to="/webshop">
+                <Button 
+                  size="lg" 
+                  rounded="full"
+                  fontWeight="semibold"
+                  bg="black"
+                  color="white"
+                  px={8}
+                  _hover={{ bg: "gray.800", transform: "translateY(-2px)" }}
+                  transition="all 0.2s"
+                  boxShadow="lg"
+                >
+                  Till Produkterna
+                </Button>
+              </Link>
+              <Link to="/contact">
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  rounded="full"
+                  fontWeight="semibold"
+                  borderWidth="2px"
+                  px={8}
+                  _hover={{ bg: "white", transform: "translateY(-2px)" }}
+                  transition="all 0.2s"
+                >
+                  Få offert
+                </Button>
+              </Link>
+            </HStack>
+          </Container>
+        </Box>
       </ScrollReveal>
     </Box>
   );
@@ -521,34 +659,51 @@ const TestimonialsSection = () => {
   const t = testimonials[index];
 
   return (
-    <Box bg="primary.50" py={20}>
-      <Container maxW="4xl" px={{ base: 6, md: 12 }}>
-        <Heading textAlign="center" mb={10} color="primary.900">
-          Vad våra kunder säger
-        </Heading>
+    <Box bg="primary.50" py={24}>
+      <Container maxW="5xl" px={{ base: 6, md: 12 }}>
+        <VStack mb={12} gap={3}>
+          <Badge
+            colorScheme="primary"
+            borderRadius="full"
+            px={4}
+            py={1}
+            fontSize="sm"
+            fontWeight="semibold"
+          >
+            Kundomdömen
+          </Badge>
+          <Heading textAlign="center" size="2xl" color="primary.900">
+            Vad våra kunder säger
+          </Heading>
+        </VStack>
         <Box
           bg="white"
           borderRadius="2xl"
-          boxShadow="sm"
-          p={{ base: 6, md: 10 }}
+          boxShadow="xl"
+          p={{ base: 8, md: 12 }}
           position="relative"
+          borderWidth="1px"
+          borderColor="primary.100"
         >
-          <Flex justify="space-between" align="center" gap={6}>
+          <Flex justify="space-between" align="center" gap={6} direction={{ base: "column", md: "row" }}>
             <Button
               aria-label="Föregående omdöme"
               variant="ghost"
+              rounded="full"
+              size="lg"
               onClick={() =>
                 setIndex(
                   (index - 1 + testimonials.length) % testimonials.length
                 )
               }
+              _hover={{ bg: "primary.50" }}
             >
-              <Icon as={FaChevronLeft} />
+              <Icon as={FaChevronLeft} boxSize={5} />
             </Button>
 
-            <VStack flex="1" gap={4} textAlign="center">
-              <Text fontSize={{ base: "lg", md: "xl" }} color="gray.700">
-                “{t.quote}”
+            <VStack flex="1" gap={5} textAlign="center" px={{ base: 0, md: 8 }}>
+              <Text fontSize={{ base: "lg", md: "xl" }} color="gray.700" fontStyle="italic" lineHeight="tall">
+                "{t.quote}"
               </Text>
               <HStack justify="center" gap={1}>
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -556,35 +711,42 @@ const TestimonialsSection = () => {
                     key={i}
                     as={FaStar}
                     color={i < t.rating ? "yellow.400" : "gray.300"}
+                    boxSize={5}
                   />
                 ))}
               </HStack>
-              <Text fontWeight="semibold">{t.name}</Text>
-              <Text color="gray.500" fontSize="sm">
-                {t.company}
-              </Text>
+              <VStack gap={0}>
+                <Text fontWeight="bold" fontSize="lg" color="primary.900">{t.name}</Text>
+                <Text color="gray.500" fontSize="sm">
+                  {t.company}
+                </Text>
+              </VStack>
             </VStack>
 
             <Button
               aria-label="Nästa omdöme"
               variant="ghost"
+              rounded="full"
+              size="lg"
               onClick={() => setIndex((index + 1) % testimonials.length)}
+              _hover={{ bg: "primary.50" }}
             >
-              <Icon as={FaChevronRight} />
+              <Icon as={FaChevronRight} boxSize={5} />
             </Button>
           </Flex>
 
-          <HStack justify="center" gap={2} mt={6}>
+          <HStack justify="center" gap={2} mt={8}>
             {testimonials.map((_, i) => (
               <Box
                 key={i}
-                w={i === index ? 6 : 2}
+                w={i === index ? 8 : 2}
                 h={2}
                 borderRadius="full"
                 bg={i === index ? "primary.600" : "primary.200"}
-                transition="width 0.2s"
+                transition="all 0.2s"
                 cursor="pointer"
                 onClick={() => setIndex(i)}
+                _hover={{ bg: i === index ? "primary.600" : "primary.300" }}
               />
             ))}
           </HStack>
