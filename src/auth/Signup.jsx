@@ -157,12 +157,12 @@ const Signup = () => {
             boxShadow="xl"
             p={{ base: 8, md: 12 }}
             w="100%"
-          >
-            {loading ? (
+    >
+      {loading ? (
               <Flex justify="center" py={12}>
                 <Spinner size="xl" color="primary.600" />
               </Flex>
-            ) : (
+      ) : (
               <VStack spacing={6} as="form" w="100%" onSubmit={handleSubmit}>
                 <VStack mb={4} gap={2} align="flex-start" w="100%">
                   <Heading size="xl" color="primary.900">
@@ -173,7 +173,7 @@ const Signup = () => {
                   </Text>
                 </VStack>
 
-                {errMsg && (
+          {errMsg && (
                   <Box
                     ref={errRef}
                     bg="red.50"
@@ -185,54 +185,54 @@ const Signup = () => {
                     aria-live="assertive"
                   >
                     <Text color="red.600" fontSize="sm" fontWeight="medium">
-                      {errMsg}
-                    </Text>
+              {errMsg}
+            </Text>
                   </Box>
-                )}
+          )}
 
-                {/* Name Field */}
-                <Box w="100%">
+          {/* Name Field */}
+          <Box w="100%">
                   <Text fontWeight="medium" mb={2} color="gray.700">
                     Namn
                   </Text>
-                  <HStack>
-                    <Input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+            <HStack>
+              <Input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                       placeholder="Ditt namn"
                       size="lg"
                       borderRadius="lg"
                       borderColor="gray.300"
                       _hover={{ borderColor: "primary.400" }}
                       _focus={{ borderColor: "primary.500", boxShadow: "0 0 0 1px var(--chakra-colors-primary-500)" }}
-                      ref={userRef}
+                ref={userRef}
                       autoComplete="name"
-                      required
-                    />
-                    {validName ? (
+                required
+              />
+              {validName ? (
                       <Icon as={FontAwesomeIcon} icon={faCheck} color="green.500" boxSize={5} />
-                    ) : name ? (
+              ) : name ? (
                       <Icon as={FontAwesomeIcon} icon={faTimes} color="red.500" boxSize={5} />
-                    ) : null}
-                  </HStack>
-                  {!validName && name && (
+              ) : null}
+            </HStack>
+            {!validName && name && (
                     <Text fontSize="sm" color="gray.500" mt={1} display="flex" alignItems="center" gap={1}>
                       <FontAwesomeIcon icon={faInfoCircle} /> 4–15 bokstäver.
-                    </Text>
-                  )}
-                </Box>
+              </Text>
+            )}
+          </Box>
 
-                {/* Email Field */}
-                <Box w="100%">
+          {/* Email Field */}
+          <Box w="100%">
                   <Text fontWeight="medium" mb={2} color="gray.700">
                     E-postadress
                   </Text>
-                  <HStack>
-                    <Input
+            <HStack>
+              <Input
                       type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                       placeholder="din@epost.se"
                       size="lg"
                       borderRadius="lg"
@@ -240,31 +240,31 @@ const Signup = () => {
                       _hover={{ borderColor: "primary.400" }}
                       _focus={{ borderColor: "primary.500", boxShadow: "0 0 0 1px var(--chakra-colors-primary-500)" }}
                       autoComplete="email"
-                      required
-                    />
-                    {validEmail ? (
+                required
+              />
+              {validEmail ? (
                       <Icon as={FontAwesomeIcon} icon={faCheck} color="green.500" boxSize={5} />
-                    ) : email ? (
+              ) : email ? (
                       <Icon as={FontAwesomeIcon} icon={faTimes} color="red.500" boxSize={5} />
-                    ) : null}
-                  </HStack>
-                  {!validEmail && email && (
+              ) : null}
+            </HStack>
+            {!validEmail && email && (
                     <Text fontSize="sm" color="gray.500" mt={1} display="flex" alignItems="center" gap={1}>
                       <FontAwesomeIcon icon={faInfoCircle} /> Måste sluta med @gmail.com eller @hotmail.com
-                    </Text>
-                  )}
-                </Box>
+              </Text>
+            )}
+          </Box>
 
-                {/* Password Field */}
-                <Box w="100%">
+          {/* Password Field */}
+          <Box w="100%">
                   <Text fontWeight="medium" mb={2} color="gray.700">
                     Lösenord
                   </Text>
-                  <HStack>
-                    <Input
-                      type="password"
-                      value={pwd}
-                      onChange={(e) => setPwd(e.target.value)}
+            <HStack>
+              <Input
+                type="password"
+                value={pwd}
+                onChange={(e) => setPwd(e.target.value)}
                       placeholder="••••••••"
                       size="lg"
                       borderRadius="lg"
@@ -272,31 +272,31 @@ const Signup = () => {
                       _hover={{ borderColor: "primary.400" }}
                       _focus={{ borderColor: "primary.500", boxShadow: "0 0 0 1px var(--chakra-colors-primary-500)" }}
                       autoComplete="new-password"
-                      required
-                    />
-                    {validPwd ? (
+                required
+              />
+              {validPwd ? (
                       <Icon as={FontAwesomeIcon} icon={faCheck} color="green.500" boxSize={5} />
-                    ) : pwd ? (
+              ) : pwd ? (
                       <Icon as={FontAwesomeIcon} icon={faTimes} color="red.500" boxSize={5} />
-                    ) : null}
-                  </HStack>
-                  {!validPwd && pwd && (
+              ) : null}
+            </HStack>
+            {!validPwd && pwd && (
                     <Text fontSize="sm" color="gray.500" mt={1} display="flex" alignItems="center" gap={1}>
                       <FontAwesomeIcon icon={faInfoCircle} /> 8–24 tecken, 1 stor bokstav, 1 liten bokstav, 1 siffra, 1 specialtecken.
-                    </Text>
-                  )}
-                </Box>
+              </Text>
+            )}
+          </Box>
 
-                {/* Confirm Password */}
-                <Box w="100%">
+          {/* Confirm Password */}
+          <Box w="100%">
                   <Text fontWeight="medium" mb={2} color="gray.700">
                     Bekräfta lösenord
                   </Text>
-                  <HStack>
-                    <Input
-                      type="password"
-                      value={matchPwd}
-                      onChange={(e) => setMatchPwd(e.target.value)}
+            <HStack>
+              <Input
+                type="password"
+                value={matchPwd}
+                onChange={(e) => setMatchPwd(e.target.value)}
                       placeholder="••••••••"
                       size="lg"
                       borderRadius="lg"
@@ -304,26 +304,26 @@ const Signup = () => {
                       _hover={{ borderColor: "primary.400" }}
                       _focus={{ borderColor: "primary.500", boxShadow: "0 0 0 1px var(--chakra-colors-primary-500)" }}
                       autoComplete="new-password"
-                      required
-                    />
-                    {validMatch && matchPwd ? (
+                required
+              />
+              {validMatch && matchPwd ? (
                       <Icon as={FontAwesomeIcon} icon={faCheck} color="green.500" boxSize={5} />
-                    ) : matchPwd ? (
+              ) : matchPwd ? (
                       <Icon as={FontAwesomeIcon} icon={faTimes} color="red.500" boxSize={5} />
-                    ) : null}
-                  </HStack>
-                  {!validMatch && matchPwd && (
+              ) : null}
+            </HStack>
+            {!validMatch && matchPwd && (
                     <Text fontSize="sm" color="gray.500" mt={1} display="flex" alignItems="center" gap={1}>
                       <FontAwesomeIcon icon={faInfoCircle} /> Lösenorden måste matcha.
-                    </Text>
-                  )}
-                </Box>
+              </Text>
+            )}
+          </Box>
 
-                {/* Submit */}
-                <Button
-                  type="submit"
+          {/* Submit */}
+          <Button
+            type="submit"
                   size="lg"
-                  w="100%"
+            w="100%"
                   bg="black"
                   color="white"
                   borderRadius="full"
@@ -331,12 +331,12 @@ const Signup = () => {
                   _hover={{ bg: "gray.800", transform: "translateY(-2px)" }}
                   _active={{ transform: "translateY(0)" }}
                   transition="all 0.2s"
-                  isDisabled={!validName || !validEmail || !validPwd || !validMatch}
+            isDisabled={!validName || !validEmail || !validPwd || !validMatch}
                   boxShadow="lg"
                   mt={2}
-                >
+          >
                   Skapa konto
-                </Button>
+          </Button>
 
                 <Text mt={4} textAlign="center" color="gray.600">
                   Har du redan ett konto?{" "}
@@ -344,11 +344,11 @@ const Signup = () => {
                     <Text as="span" color="primary.600" fontWeight="semibold" _hover={{ textDecoration: "underline" }}>
                       Logga in här
                     </Text>
-                  </Link>
-                </Text>
-              </VStack>
-            )}
-          </Box>
+            </Link>
+          </Text>
+        </VStack>
+      )}
+    </Box>
         </Container>
       </Flex>
     </Flex>

@@ -19,6 +19,9 @@ import {
   doc,
   getDoc,
   getDocs,
+  deleteDoc,
+  addDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../components/firebase";
 import type { ProductType } from "../hooks/types";
@@ -117,20 +120,108 @@ const Products = () => {
   };
 
   const handleDeleteProduct = async () => {
-    console.log(selectedProduct);
+    if (!selectedProduct) return;
 
-    setIsUpdating(true);
+    try {
+      setIsUpdating(true);
+      setIsDeleteDialogOpen(false);
 
-    setIsDeleteDialogOpen(false);
+      // Delete from Firestore
+      await deleteDoc(doc(db, "products", selectedProduct.id));
 
-    setTimeout(() => {
+      // Update the central lastUpdated document
+      await updateDoc(doc(db, "products", "lastUpdated"), {
+        time: new Date(),
+      });
+
+      // Update localStorage immediately
+      localStorage.setItem("productsLastUpdated", String(Date.now()));
+
+      // Remove product from state
+      const updatedProducts = products.filter((p) => p.id !== selectedProduct.id);
+
+      // Update state
+      setProducts(updatedProducts);
+
+      // Save the updated version to localStorage
+      localStorage.setItem("products", JSON.stringify(updatedProducts));
+
+      // Reset selected product
+      setSelectedProduct(null);
+    } catch (err) {
+      console.error("Error deleting product", err);
+      // You might want to show an error message to the user here
+    } finally {
       setIsUpdating(false);
-    }, 3000);
+    }
   };
 
   const handleAddNewProduct = async () => {
-    console.log(selectedProduct);
-    setAddProductSure(false);
+    if (!fields.name || !fields.price) {
+      console.error("Name and price are required");
+      setAddProductSure(false);
+      return;
+    }
+
+    try {
+      setIsUpdating(true);
+      setAddProductSure(false);
+      setIsAddNewProductDialogOpen(false);
+
+      // Create new product document in Firestore
+      const productsCollection = collection(db, "products");
+      const newProductRef = await addDoc(productsCollection, {
+        name: fields.name,
+        description: fields.description || "",
+        price: fields.price,
+        cost: "", // You might want to add a cost field to the form
+        group: fields.group || "",
+        image: fields.image || "",
+        originalName: fields.name,
+        lastUpdated: serverTimestamp(),
+      });
+
+      // Update the central lastUpdated document
+      await updateDoc(doc(db, "products", "lastUpdated"), {
+        time: new Date(),
+      });
+
+      // Update localStorage immediately
+      localStorage.setItem("productsLastUpdated", String(Date.now()));
+
+      // Create new product object with the generated ID
+      const newProduct: ProductType = {
+        id: newProductRef.id,
+        name: fields.name,
+        description: fields.description || "",
+        price: fields.price,
+        cost: "",
+        group: fields.group || "",
+        image: fields.image || "",
+        originalName: fields.name,
+      };
+
+      // Add to state
+      const updatedProducts = [...products, newProduct];
+      setProducts(updatedProducts);
+
+      // Save to localStorage
+      localStorage.setItem("products", JSON.stringify(updatedProducts));
+
+      // Reset fields
+      setFields({
+        name: "",
+        description: "",
+        price: "",
+        group: "",
+        image: "",
+      });
+    } catch (err) {
+      console.error("Error adding product", err);
+      // You might want to show an error message to the user here
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   const [filter, setFilter] = useState("");
@@ -421,7 +512,7 @@ const Products = () => {
         onClose={() => setAddProductSure(false)}
         onConfirm={handleAddNewProduct}
         title="Add a new product?"
-        description={`Do you want to add ${selectedProduct?.name} to products?`}
+        description={`Do you want to add "${fields.name}" to products?`}
         btnText="Add"
       />
 
@@ -528,9 +619,10 @@ const Products = () => {
                           bg: "black",
                           color: "white",
                           transform: "scale(1.02)",
-                          transition: "transform 0.35s",
+                          transition: "all 0.35s",
                         }}
                         height={"100%"}
+                        cursor={"pointer"}
                         display="flex"
                         justifyContent="center"
                         alignItems={"center"}

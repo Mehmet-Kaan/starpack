@@ -76,13 +76,13 @@ const Signin = () => {
       <Flex minH="100vh" direction={{ base: "column", lg: "row" }}>
         {/* Left Side - Image (30%) */}
         <Box
-          w={{ base: "100%", lg: "30%" }}
+          w={{ base: "100%", lg: "40%" }}
           h={{ base: "40vh", lg: "100vh" }}
           position="relative"
           display={{ base: "none", lg: "block" }}
         >
           <Image
-            src="/images/packaging-hero.jpg"
+            src="./images/packaging-hero.jpg"
             alt="Packaging"
             w="100%"
             h="100%"
@@ -101,7 +101,7 @@ const Signin = () => {
           />
           <VStack
             position="absolute"
-            bottom={8}
+            top={48}
             left={0}
             right={0}
             px={8}
@@ -128,11 +128,11 @@ const Signin = () => {
         >
           <Container maxW="md" w="100%">
             <Box
-              bg="white"
-              borderRadius="2xl"
-              boxShadow="xl"
-              p={{ base: 8, md: 12 }}
-              w="100%"
+              // bg="white"
+              // borderRadius="2xl"
+              // boxShadow="xl"
+              // p={{ base: 8, md: 12 }}
+              // w="100%"
             >
               {loading ? (
                 <Flex justify="center" py={12}>

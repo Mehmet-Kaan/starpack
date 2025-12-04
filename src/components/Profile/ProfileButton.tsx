@@ -28,17 +28,17 @@ const ProfileButton = ({ onClick }: { onClick?: () => void }) => {
         </Link>
       ) : (
         <>
-          <Link to="/signin">
+          {/* <Link to="/signin"> */}
             <Button
-              // onClick={() => {
-              //   setAuthOpen(true);
-              // }}
+              onClick={() => {
+                setAuthOpen(true);
+              }}
               variant="ghost"
             >
               <Icon as={FaUser} mr={2} />
               Log in
             </Button>
-          </Link>
+          {/* </Link> */}
 
           <AuthDrawer
             open={authOpen}

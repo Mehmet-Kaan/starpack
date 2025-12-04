@@ -272,7 +272,7 @@ const ProductView = () => {
                 {/* Product Image */}
                 <Box flex="1">
                   <Image
-                    src={product.image || "./images/placeholder.png"}
+                    src={product.image ? `./images/${product.image}` : "./images/placeholder.png"}
                     alt={product.name}
                     borderRadius="lg"
                     w="100%"
@@ -480,7 +480,7 @@ const ProductView = () => {
                     >
                       <Stack gap={3}>
                         <Image
-                          src={recProduct.image || "./images/placeholder.png"}
+                          src={recProduct.image ? `./images/${recProduct.image}` : "./images/placeholder.png"}
                           alt={recProduct.name}
                           borderRadius="md"
                           h="200px"

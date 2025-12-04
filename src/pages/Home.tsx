@@ -223,8 +223,8 @@ const Home = () => {
               Produktkategorier
             </Badge>
             <Heading textAlign="center" size="2xl" color="primary.900">
-              Våra Produktkategorier
-            </Heading>
+            Våra Produktkategorier
+          </Heading>
           </VStack>
           <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
             {[
@@ -256,21 +256,21 @@ const Home = () => {
                 _hover={{ boxShadow: "xl", transform: "translateY(-6px)", borderColor: "primary.200" }}
               >
                 <Box position="relative" overflow="hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
+                <Image
+                  src={item.image}
+                  alt={item.title}
                     h="240px"
-                    w="100%"
-                    objectFit="cover"
+                  w="100%"
+                  objectFit="cover"
                     transition="transform 0.3s"
                     _hover={{ transform: "scale(1.05)" }}
-                    onError={(e) => {
-                      const target = e.currentTarget as HTMLImageElement;
-                      if (target.src.indexOf("placeholder.png") === -1) {
-                        target.src = "./images/placeholder.png";
-                      }
-                    }}
-                  />
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement;
+                    if (target.src.indexOf("placeholder.png") === -1) {
+                      target.src = "./images/placeholder.png";
+                    }
+                  }}
+                />
                 </Box>
                 <Box p={8}>
                   <Heading size="lg" mb={3} color="primary.900">
@@ -343,21 +343,21 @@ const Home = () => {
                   _hover={{ boxShadow: "xl", transform: "translateY(-4px)", borderColor: "primary.200" }}
                 >
                   <Box position="relative" overflow="hidden">
-                    <Image
-                      src={p.image}
-                      alt={p.title}
+                  <Image
+                    src={p.image}
+                    alt={p.title}
                       h="180px"
-                      w="100%"
-                      objectFit="cover"
+                    w="100%"
+                    objectFit="cover"
                       transition="transform 0.3s"
                       _hover={{ transform: "scale(1.05)" }}
-                      onError={(e) => {
-                        const target = e.currentTarget as HTMLImageElement;
-                        if (target.src.indexOf("placeholder.png") === -1) {
-                          target.src = "/starpack/images/placeholder.png";
-                        }
-                      }}
-                    />
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLImageElement;
+                      if (target.src.indexOf("placeholder.png") === -1) {
+                        target.src = "/starpack/images/placeholder.png";
+                      }
+                    }}
+                  />
                   </Box>
                   <Box p={5}>
                     <Heading size="md" mb={2} color="primary.900">
@@ -411,21 +411,21 @@ const Home = () => {
                 _hover={{ boxShadow: "xl", transform: "translateY(-6px)", borderColor: "primary.200" }}
               >
                 <Box position="relative" overflow="hidden">
-                  <Image
-                    src={p.image}
-                    alt={p.title}
+                <Image
+                  src={p.image}
+                  alt={p.title}
                     h="200px"
-                    w="100%"
-                    objectFit="cover"
+                  w="100%"
+                  objectFit="cover"
                     transition="transform 0.3s"
                     _hover={{ transform: "scale(1.05)" }}
-                    onError={(e) => {
-                      const target = e.currentTarget as HTMLImageElement;
-                      if (target.src.indexOf("placeholder.png") === -1) {
-                        target.src = "/starpack/images/placeholder.png";
-                      }
-                    }}
-                  />
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement;
+                    if (target.src.indexOf("placeholder.png") === -1) {
+                      target.src = "/starpack/images/placeholder.png";
+                    }
+                  }}
+                />
                 </Box>
                 <Box p={5}>
                   <Heading size="md" mb={2} color="primary.900">
@@ -452,12 +452,12 @@ const Home = () => {
                 px={4}
                 py={1}
                 fontSize="sm"
-                fontWeight="semibold"
-              >
+              fontWeight="semibold"
+            >
                 Förtroende
               </Badge>
               <Heading size="xl" color="primary.900">
-                Pålitlig partner till företag i hela Sverige
+              Pålitlig partner till företag i hela Sverige
               </Heading>
             </VStack>
             <Flex
@@ -515,8 +515,8 @@ const Home = () => {
                 Varför oss?
               </Badge>
               <Heading textAlign="center" size="2xl" mb={4}>
-                Varför välja oss?
-              </Heading>
+              Varför välja oss?
+            </Heading>
               <Text textAlign="center" color="primary.100" fontSize="lg" maxW="2xl">
                 Vi erbjuder kvalitet, snabbhet och hållbarhet i varje leverans
               </Text>
@@ -578,8 +578,8 @@ const Home = () => {
                 Redo att beställa?
               </Heading>
               <Text fontSize="xl" color="gray.700" maxW="2xl">
-                Utforska våra produkter och börja handla direkt online.
-              </Text>
+            Utforska våra produkter och börja handla direkt online.
+          </Text>
             </VStack>
             <HStack justify="center" gap={4} wrap="wrap">
               <Link to="/webshop">
@@ -596,8 +596,8 @@ const Home = () => {
                 >
                   Till Produkterna
                 </Button>
-              </Link>
-              <Link to="/contact">
+            </Link>
+            <Link to="/contact">
                 <Button 
                   variant="outline" 
                   size="lg"
@@ -608,11 +608,11 @@ const Home = () => {
                   _hover={{ bg: "white", transform: "translateY(-2px)" }}
                   transition="all 0.2s"
                 >
-                  Få offert
-                </Button>
-              </Link>
-            </HStack>
-          </Container>
+                Få offert
+              </Button>
+            </Link>
+          </HStack>
+        </Container>
         </Box>
       </ScrollReveal>
     </Box>
@@ -673,8 +673,8 @@ const TestimonialsSection = () => {
             Kundomdömen
           </Badge>
           <Heading textAlign="center" size="2xl" color="primary.900">
-            Vad våra kunder säger
-          </Heading>
+          Vad våra kunder säger
+        </Heading>
         </VStack>
         <Box
           bg="white"
@@ -717,9 +717,9 @@ const TestimonialsSection = () => {
               </HStack>
               <VStack gap={0}>
                 <Text fontWeight="bold" fontSize="lg" color="primary.900">{t.name}</Text>
-                <Text color="gray.500" fontSize="sm">
-                  {t.company}
-                </Text>
+              <Text color="gray.500" fontSize="sm">
+                {t.company}
+              </Text>
               </VStack>
             </VStack>
 

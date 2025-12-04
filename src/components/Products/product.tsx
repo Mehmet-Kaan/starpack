@@ -30,6 +30,17 @@ interface ProductProps {
 const Product = ({ product, onAdminEdit, onAdminDelete }: ProductProps) => {
   const { isAdmin } = useContext(AuthContext);
 
+  const formatPrice = (price: string) => {
+    // Remove spaces, convert comma to dot, keep digits and dot
+    const normalized = price.replace(/\s/g, "").replace(",", ".");
+    const numeric = parseFloat(normalized.replace(/[^0-9.]/g, ""));
+
+    if (isNaN(numeric)) return price;
+
+    // Format as 00,00 (Swedish/Danish style)
+    return numeric.toFixed(2).replace(".", ",");
+  };
+
   // const { addToCart, increaseQty, decreaseQty } = useCart();
 
   // const handleAdd = () => {
@@ -58,7 +69,7 @@ const Product = ({ product, onAdminEdit, onAdminDelete }: ProductProps) => {
         <Stack gap={3} position={"relative"}>
           <Link to={`/product/${product.id}`}>
             <Image
-              src={product.image || "./images/placeholder.png"}
+              src={product.image ? `./images/${product.image}` : "./images/placeholder.png"}
               alt={product.name}
               borderRadius="md"
               objectFit="cover"
@@ -75,7 +86,7 @@ const Product = ({ product, onAdminEdit, onAdminDelete }: ProductProps) => {
             </Heading>
 
             <Text>{product.description}</Text>
-            <Text fontWeight="bold">{product.price} Dk</Text>
+            <Text fontWeight="bold">{formatPrice(product.price)} Dk</Text>
           </Link>
           {/* Admin Buttons */}
           {isAdmin && (
