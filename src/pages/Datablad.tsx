@@ -33,7 +33,7 @@ const DATABLAD_FILES = [
   "Film 60cm - Datablad.pdf",
   "Film-Perforeret 45cm.pdf",
   "Franskbrødpose.pdf",
-  "Grillpose/Varmpose.pdf",
+  "Grillpose (Varmpose).pdf",
   "Håndklarærulle 6stk.pdf",
   "JustOne.pdf",
   "Køkkenrulle.pdf",
