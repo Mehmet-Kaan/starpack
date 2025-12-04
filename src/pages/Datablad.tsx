@@ -17,45 +17,58 @@ import { FaFilePdf, FaSearch, FaDownload } from "react-icons/fa";
 import ScrollReveal from "../hooks/ScrollReveal";
 
 // List of available datablad files
-const DATABLAD_FILES = [
-  "Alu-form-rund.pdf",
-  "Aluminium Folie 30cm.pdf",
-  "Aluminium Folie 45cm.pdf",
-  "Aluminiumbakke 850 ml.pdf",
-  "Låg til Aluminiumbakke.pdf",
-  "Burger-lommer.pdf",
-  "Burger-papir.pdf",
-  "Burgerbox.pdf",
-  "Donerbox.pdf",
-  "Dressingbæger 50ml.pdf",
-  "Dressingbæger 80ml.pdf",
-  "Låg til Dressingbæger 50_80ml.pdf",
-  "Film 60cm - Datablad.pdf",
-  "Film-Perforeret 45cm.pdf",
-  "Franskbrødpose.pdf",
-  "Grillpose (Varmpose).pdf",
-  "Håndklarærulle 6stk.pdf",
-  "JustOne.pdf",
-  "Køkkenrulle.pdf",
-  "Papirpose - Datablad.pdf",
-  "Pergament.pdf",
-  "Pølseeske 00 - Datablad.pdf",
-  "Pølseeske 01 - Datablad.pdf",
-  "Pølseeske Big - Datablad.pdf",
-  "Pølseeske Medium - Datablad.pdf",
-  "Pølseeske Small - Datablad.pdf",
-  "Pommes-Frites-Bakke 0.pdf",
-  "Pommes-Frites-Bakke 1.pdf",
-  "Pommes-frites-bakke-2.pdf",
-  "Salatbæger-375ml.pdf",
-  "Salatbaeger-500ml.pdf",
-  "Salatbager 250ml.pdf",
-  "Salatbeger 750ml.pdf",
-  "Serviet 33x33.pdf",
-  "Serviet 40x40.pdf",
-  "Termobakker 1-rum.pdf",
-  "Termobakker 3-rum.pdf",
-];
+// const DATABLAD_FILES = [
+//   "Alu-form-rund.pdf",
+//   "Aluminium Folie 30cm.pdf",
+//   "Aluminium Folie 45cm.pdf",
+//   "Aluminiumbakke 850 ml.pdf",
+//   "Låg til Aluminiumbakke.pdf",
+//   "Burger-lommer.pdf",
+//   "Burger-papir.pdf",
+//   "Burgerbox.pdf",
+//   "Donerbox.pdf",
+//   "Dressingbæger 50ml.pdf",
+//   "Dressingbæger 80ml.pdf",
+//   "Låg til Dressingbæger 50_80ml.pdf",
+//   "Film 60cm - Datablad.pdf",
+//   "Film-Perforeret 45cm.pdf",
+//   "Franskbrødpose.pdf",
+//   "Grillpose (Varmpose).pdf",
+//   "Håndklarærulle 6stk.pdf",
+//   "JustOne.pdf",
+//   "Køkkenrulle.pdf",
+//   "Papirpose - Datablad.pdf",
+//   "Pergament.pdf",
+//   "Pølseeske 00 - Datablad.pdf",
+//   "Pølseeske 01 - Datablad.pdf",
+//   "Pølseeske Big - Datablad.pdf",
+//   "Pølseeske Medium - Datablad.pdf",
+//   "Pølseeske Small - Datablad.pdf",
+//   "Pommes-Frites-Bakke 0.pdf",
+//   "Pommes-Frites-Bakke 1.pdf",
+//   "Pommes-frites-bakke-2.pdf",
+//   "Salatbæger-375ml.pdf",
+//   "Salatbaeger-500ml.pdf",
+//   "Salatbager 250ml.pdf",
+//   "Salatbeger 750ml.pdf",
+//   "Serviet 33x33.pdf",
+//   "Serviet 40x40.pdf",
+//   "Termobakker 1-rum.pdf",
+//   "Termobakker 3-rum.pdf",
+// ];
+
+const DATABLAD_FILES = Object.keys(
+  import.meta.glob("/public/datablads/*.pdf")
+).map((path) => {
+  const fullFileName = path.replace("/public/datablads/", "");
+  const displayName = fullFileName.replace(/\.pdf$/i, "");
+
+  return {
+    fileName: fullFileName, // ex: "Alu-form-rund.pdf"
+    displayName, // ex: "Alu-form-rund"
+    url: `/starpack/datablads/${fullFileName}`, // correct download path
+  };
+});
 
 interface DatabladFile {
   fileName: string;
@@ -67,19 +80,12 @@ const Datablad = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [itemsToShow, setItemsToShow] = useState(6); // Show 6 items initially
 
-  // Create datablad file objects
-  const databladFiles: DatabladFile[] = DATABLAD_FILES.map((file) => ({
-    fileName: file,
-    displayName: file.replace(/\.pdf$/i, "").replace(/\s*-\s*Datablad/gi, ""),
-    url: `/starpack/datablads/${file}`,
-  }));
-
   // Filter datablads by search term
   const filteredDatablads = useMemo(() => {
-    if (!searchTerm) return databladFiles;
+    if (!searchTerm) return DATABLAD_FILES;
 
     const searchLower = searchTerm.toLowerCase();
-    return databladFiles.filter(
+    return DATABLAD_FILES.filter(
       (file) =>
         file.displayName.toLowerCase().includes(searchLower) ||
         file.fileName.toLowerCase().includes(searchLower)
