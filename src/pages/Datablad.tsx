@@ -21,17 +21,24 @@ const DATABLAD_FILES = [
   "Alu-form-rund.pdf",
   "Aluminium Folie 30cm.pdf",
   "Aluminium Folie 45cm.pdf",
-  "Burger-box-termobakke.pdf",
+  "Aluminiumbakke 850 ml.pdf",
+  "Låg til Aluminiumbakke.pdf",
   "Burger-lommer.pdf",
   "Burger-papir.pdf",
+  "Burgerbox.pdf",
   "Donerbox.pdf",
+  "Dressingbæger 50ml.pdf",
+  "Dressingbæger 80ml.pdf",
+  "Låg til Dressingbæger 50_80ml.pdf",
   "Film 60cm - Datablad.pdf",
   "Film-Perforeret 45cm.pdf",
   "Franskbrødpose.pdf",
+  "Grillpose/Varmpose.pdf",
   "Håndklarærulle 6stk.pdf",
   "JustOne.pdf",
   "Køkkenrulle.pdf",
   "Papirpose - Datablad.pdf",
+  "Pergament.pdf",
   "Pølseeske 00 - Datablad.pdf",
   "Pølseeske 01 - Datablad.pdf",
   "Pølseeske Big - Datablad.pdf",
@@ -40,13 +47,14 @@ const DATABLAD_FILES = [
   "Pommes-Frites-Bakke 0.pdf",
   "Pommes-Frites-Bakke 1.pdf",
   "Pommes-frites-bakke-2.pdf",
-  "R1, Alu-kartong låg.pdf",
   "Salatbæger-375ml.pdf",
   "Salatbaeger-500ml.pdf",
   "Salatbager 250ml.pdf",
   "Salatbeger 750ml.pdf",
   "Serviet 33x33.pdf",
   "Serviet 40x40.pdf",
+  "Termobakker 1-rum.pdf",
+  "Termobakker 3-rum.pdf",
 ];
 
 interface DatabladFile {
@@ -202,9 +210,7 @@ const Datablad = () => {
             <Heading size="md" mb={2} color="gray.600">
               Inga datablad hittades
             </Heading>
-            <Text color="gray.500">
-              Försök med en annan sökterm.
-            </Text>
+            <Text color="gray.500">Försök med en annan sökterm.</Text>
           </Box>
         ) : (
           <>
@@ -317,4 +323,3 @@ const Datablad = () => {
 };
 
 export default Datablad;
-
