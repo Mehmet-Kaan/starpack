@@ -80,6 +80,15 @@ const Datablad = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [itemsToShow, setItemsToShow] = useState(6); // Show 6 items initially
 
+  // Derive datablad files (already objects now)
+  // const databladFiles: DatabladFile[] = DATABLAD_FILES;
+
+  // const databladFiles: DatabladFile[] = DATABLAD_FILES.map((file) => ({
+  //   fileName: file.fileName,
+  //   displayName: file.displayName.replace(/\s*-\s*Datablad/gi, ""),
+  //   url: file.url,
+  // }));
+
   // Filter datablads by search term
   const filteredDatablads = useMemo(() => {
     if (!searchTerm) return DATABLAD_FILES;
