@@ -22,7 +22,7 @@ const DATABLAD_FILES = [
   "Aluminium Folie 30cm.pdf",
   "Aluminium Folie 45cm.pdf",
   "Aluminiumbakke 850 ml.pdf",
-  "Låg til Aluminiumbakke.pdf",
+  "Låg-til-Aluminiumbakke.pdf",
   "Burger-lommer.pdf",
   "Burger-papir.pdf",
   "Burgerbox.pdf",
