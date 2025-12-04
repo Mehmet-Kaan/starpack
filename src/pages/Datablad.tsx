@@ -62,11 +62,12 @@ const DATABLAD_FILES = Object.keys(
 ).map((path) => {
   const fullFileName = path.replace("/public/datablads/", "");
   const displayName = fullFileName.replace(/\.pdf$/i, "");
+  const encodedFileName = encodeURIComponent(fullFileName);
 
   return {
     fileName: fullFileName, // ex: "Alu-form-rund.pdf"
     displayName, // ex: "Alu-form-rund"
-    url: `/starpack/datablads/${fullFileName}`, // correct download path
+    url: `/starpack/datablads/${encodedFileName}`, // correct download path
   };
 });
 
