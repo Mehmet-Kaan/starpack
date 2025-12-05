@@ -71,11 +71,30 @@ const DATABLAD_FILES = Object.keys(
   };
 });
 
+// const DATABLAD_FILES = Object.keys(
+//   import.meta.glob("/public/datablads/*.pdf")
+// ).map((path) => {
+//   const rawName = path.replace("/public/datablads/", "");
+
+//   // Normalize to NFC (fixes å, æ, ø automatically)
+//   const fileName = rawName.normalize("NFC");
+
+//   const displayName = fileName.replace(/\.pdf$/i, "");
+//   const encodedFileName = encodeURIComponent(fileName);
+
+//   return {
+//     fileName,
+//     displayName,
+//     url: `/starpack/datablads/${encodedFileName}`,
+//   };
+// });
+
 interface DatabladFile {
   fileName: string;
   displayName: string;
   url: string;
 }
+console.log("loaded pdfs:", DATABLAD_FILES);
 
 const Datablad = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -112,7 +131,14 @@ const Datablad = () => {
   const hasMore = filteredDatablads.length > itemsToShow;
 
   const handleDownload = (file: DatabladFile) => {
-    window.open(file.url, "_blank");
+    // window.open(file.url, "_blank");
+
+    const link = document.createElement("a");
+    link.href = file.url;
+    link.download = file.fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleShowMore = () => {
