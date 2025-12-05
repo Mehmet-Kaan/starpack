@@ -94,7 +94,6 @@ interface DatabladFile {
   displayName: string;
   url: string;
 }
-console.log("loaded pdfs:", DATABLAD_FILES);
 
 const Datablad = () => {
   const [searchTerm, setSearchTerm] = useState("");
