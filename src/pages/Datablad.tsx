@@ -57,37 +57,35 @@ import ScrollReveal from "../hooks/ScrollReveal";
 //   "Termobakker 3-rum.pdf",
 // ];
 
-const DATABLAD_FILES = Object.keys(
-  import.meta.glob("/public/datablads/*.pdf")
-).map((path) => {
-  const fullFileName = path.replace("/public/datablads/", "");
-  const displayName = fullFileName.replace(/\.pdf$/i, "");
-  const encodedFileName = encodeURIComponent(fullFileName);
-
-  return {
-    fileName: fullFileName, // ex: "Alu-form-rund.pdf"
-    displayName, // ex: "Alu-form-rund"
-    url: `/starpack/datablads/${encodedFileName}`, // correct download path
-  };
-});
-
 // const DATABLAD_FILES = Object.keys(
 //   import.meta.glob("/public/datablads/*.pdf")
 // ).map((path) => {
-//   const rawName = path.replace("/public/datablads/", "");
-
-//   // Normalize to NFC (fixes å, æ, ø automatically)
-//   const fileName = rawName.normalize("NFC");
-
-//   const displayName = fileName.replace(/\.pdf$/i, "");
-//   const encodedFileName = encodeURIComponent(fileName);
+//   const fullFileName = path.replace("/public/datablads/", "");
+//   const displayName = fullFileName.replace(/\.pdf$/i, "");
+//   const encodedFileName = encodeURIComponent(fullFileName);
 
 //   return {
-//     fileName,
-//     displayName,
-//     url: `/starpack/datablads/${encodedFileName}`,
+//     fileName: fullFileName, // ex: "Alu-form-rund.pdf"
+//     displayName, // ex: "Alu-form-rund"
+//     url: `/starpack/datablads/${encodedFileName}`, // correct download path
 //   };
 // });
+
+const DATABLAD_FILES = Object.keys(
+  import.meta.glob("/public/datablads/*.pdf")
+).map((path) => {
+  // Extract raw file name
+  const raw = path.replace("/public/datablads/", "");
+
+  // Convert NFD → NFC (macOS fix)
+  const fileName = raw.normalize("NFC");
+
+  return {
+    fileName,
+    displayName: fileName.replace(/\.pdf$/i, ""),
+    url: `/starpack/datablads/${encodeURIComponent(fileName)}`,
+  };
+});
 
 interface DatabladFile {
   fileName: string;
